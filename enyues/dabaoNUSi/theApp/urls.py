@@ -20,5 +20,10 @@ urlpatterns = [
     path('', views.home, name='home'),
     path('about/', views.about, name = 'about'),
     path('home/', views.home, name = 'home'),
-    path('search/', views.BootstrapFilterView, name='search')
+    path('search/', views.BootstrapFilterView, name='search'),
+    path('food/', views.food, name='food'),
+    path('drinks/', views.drinks, name='drinks'),
+    path('help_me_dabao/', views.help_me_dabao, name='help me dabao'),
+    path('help_others_dabao/', views.help_others_dabao, name='help others tabao'),
+    path('login/', views.login, name='login')
 ]

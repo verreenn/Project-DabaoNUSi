@@ -27,3 +27,18 @@ def BootstrapFilterView(request):
     }
 
     return render(request, "bootstrap_form.html", context)
+
+def food(request):
+    return render(request, 'food.html')
+
+def drinks(request):
+    return render(request, 'drinks.html')
+
+def help_me_dabao(request):
+    return render(request, 'help-me-dabao.html')
+
+def help_others_dabao(request):
+    return render(request, 'help-others-dabao.html')
+
+def login(request):
+    return render(request, 'login.html')
