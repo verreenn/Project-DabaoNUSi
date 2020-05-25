@@ -1,0 +1,74 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1, shrink-to-fit=no"
+        />
+        <link rel="icon" href="{% static 'img/favicon.png' %}" type="image/png" />
+        <title>Project dabaoNUSi</title>
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}" />
+        <link rel="stylesheet" href="{% static 'css/flaticon.css' %}" />
+        <link rel="stylesheet" href="{% static 'css/themify-icons.css' %}" />
+        <link rel="stylesheet" href="{% static 'vendors/owl-carousel/owl.carousel.min.css' %}" />
+        <link rel="stylesheet" href="{% static 'vendors/nice-select/css/nice-select.css' %}" />
+        <!-- main css -->
+        <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+    </head>
+    <body>
+    <!--================ Start Header Menu Area =================-->
+    <!--================ End Header Menu Area =================-->
+  
+
+    <main role="main" class="container">
+
+      <h3>Filter Restaurants</h3>
+      <form method="POST" action="{% url 'search_result' %}">
+        {% csrf_token %}
+        <div class="form-row">
+            <div class="form-group col-12">
+                <div class="input-group">
+                    <input class="form-control py-2 border-right-0 border" type="search" name="location" placeholder="Location" />
+                    <span class="input-group-append">
+                        <div class="input-group-text bg-transparent">
+                            <i class="fa fa-search"></i>
+                        </div>
+                    </span>
+                </div>
+            </div>        
+        </div>
+        <div class="form-row">
+            <div class="form-group col-12">
+                <div class="input-group">
+                    <input class="form-control py-2 border-right-0 border" type="search" name="name" placeholder="Restaurant Name" />
+                    <span class="input-group-append">
+                        <div class="input-group-text bg-transparent">
+                            <i class="fa fa-search"></i>
+                        </div>
+                    </span>
+                </div>
+            </div>        
+        </div>
+        <div class="form-row">
+            <div class="form-group col-12">
+                <div class="form-group col-md-4">
+                    <label for='category'>Food Category</label>
+                    <select id="category" class="form-control" name="category">
+                        <option selected>Choose...</option>
+                        {% for cat in categories %}
+                        <option value="{{ cat }}">{{ cat }}</option>
+                        {% endfor %}
+                      </select>
+                </div>
+            </div>        
+        </div>
+        <button type="submit" class="btn btn-primary">Search</button>
+      </form>
+    </main>
+</body>
+
+</html>

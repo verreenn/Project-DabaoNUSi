@@ -1,0 +1,14 @@
+{% if queryset %}
+<div class="row">
+    <ul>
+      {% for restaurant in queryset %}
+        <li>
+          {{ restaurant }}
+        </li>
+        <hr />
+      {% endfor %}
+    </ul>
+</div>
+{% else %}
+<p>There are no restaurants</p>
+{% endif %}
