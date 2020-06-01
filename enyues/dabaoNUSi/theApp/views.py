@@ -11,6 +11,27 @@ def about(request):
 def home(request):
     return render(request, 'index.html')
 
+def arise(request):
+    return render(request, 'arise.html')
+
+def atempo(request):
+    return render(request, 'atempo.html')
+
+def barbar(request):
+    return render(request, 'barbar.html')
+
+def crave(request):
+    return render(request, 'crave.html')
+
+def hwangs(request):
+    return render(request, 'hwangs.html')
+
+def sinkee(request):
+    return render(request, 'sinkee.html')
+
+def yongtaufoo(request):
+    return render(request, 'yongtaufoo.html')
+
 def search_result(request):
     qs = Restaurant.objects.all()
     location_query = request.POST.get('location')
