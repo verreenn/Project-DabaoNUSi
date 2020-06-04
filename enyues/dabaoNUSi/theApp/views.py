@@ -1,5 +1,9 @@
+from __future__ import unicode_literals
 from django.shortcuts import render
 from .models import Restaurant, Meal, Category, Location
+
+#rom shopping_cart.models import Order
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 def index(request):
@@ -65,6 +69,7 @@ def drinks(request):
     return render(request, 'drinks.html', {'categories':categories,
     'locations':locations})
 
+@login_required
 def help_me_dabao(request):
     return render(request, 'help-me-dabao.html')
 
@@ -178,4 +183,10 @@ def frontier_drink(request):
     qs = Restaurant.objects.filter(location__name__icontains='Faculty of Science Frontier').filter(food=False)
     return render(request, "search_result.html", {'queryset':qs})
 
-
+def meal_list(request, rest_id):
+    meals = Meal.objects.filter(restaurant__id=rest_id)
+    rest = Restaurant.objects.filter(id=rest_id).first()
+    return render(request, "restaurant_meals.html", {
+        'meals':meals,
+        'rest':rest
+        })

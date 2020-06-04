@@ -28,4 +28,4 @@ class Meal(models.Model):
     restaurant = models.ForeignKey(Restaurant, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.name + " price: " + self.price + " served by " + self.restaurant
+        return self.name #+ " price: " + str(self.price) + " served by " + str(self.restaurant)

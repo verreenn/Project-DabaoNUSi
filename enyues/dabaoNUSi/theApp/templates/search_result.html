@@ -2,9 +2,9 @@
 <div class="row">
     <ul>
       {% for restaurant in queryset %}
-        <li>
+        <a href="{% url 'meal_list' rest_id=restaurant.id %}">
           {{ restaurant }}
-        </li>
+        </a>
         <hr />
       {% endfor %}
     </ul>

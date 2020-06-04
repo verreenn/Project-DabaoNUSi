@@ -16,6 +16,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from . import views
+from django.conf.urls import url
+
 urlpatterns = [
     path('', views.home, name='home'),
     path('about/', views.about, name = 'about'),
@@ -25,7 +27,6 @@ urlpatterns = [
     path('drinks/', views.drinks, name='drinks'),
     path('help_me_dabao/', views.help_me_dabao, name='help me dabao'),
     path('help_others_dabao/', views.help_others_dabao, name='help others tabao'),
-    path('login/', views.login, name='login'),
     path('arise/', views.arise, name='arise'),
     path('atempo/', views.atempo, name='atempo'),
     path('barbar/', views.barbar, name='barbar'),
@@ -59,4 +60,5 @@ urlpatterns = [
     path('Flavors_drink/', views.flavors_drink, name='Flavors Drink'),
     path('Deck_drink/', views.deck_drink, name='The Deck Drink'),
     path('Frontier_drink/', views.frontier_drink, name='Frontier Drink'),
+    url(r'^restaurant/(?P<rest_id>\d+)/$', views.meal_list, name='meal_list'),
 ]
