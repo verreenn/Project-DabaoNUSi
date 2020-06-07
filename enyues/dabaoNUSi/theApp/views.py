@@ -32,6 +32,57 @@ def sinkee(request):
 def yongtaufoo(request):
     return render(request, 'yongtaufoo.html')
 
+def cool_spot(request):
+    return render(request, 'cool_spot.html')
+
+def spinelli(request):
+    return render(request, 'spinelli.html')
+
+def maxx_coffee(request):
+    return render(request, 'maxx_coffee.html')
+
+def liho(request):
+    return render(request, 'liho.html')
+
+def gongcha(request):
+    return render(request, 'gongcha.html')
+
+def fass_mala(request):
+    return render(request, 'fass_mala.html')
+
+def teaparty(request):
+    return render(request, 'teaparty.html')
+
+def subway(request):
+    return render(request, 'subway.html')
+
+def ichiban(request):
+    return render(request, 'ichiban.html')
+
+def pasta_express(request):
+    return render(request, 'pasta_express.html')
+
+def deck_juice(request):
+    return render(request, 'deck_juice.html')
+
+def liji(request):
+    return render(request, 'liji.html')
+
+def the_coffee_roaster(request):
+    return render(request, 'the_coffee_roaster.html')
+
+def jewel_coffee(request):
+    return render(request, 'jewel_coffee.html')
+
+def starbucks(request):
+    return render(request, 'starbucks.html')
+    
+def food2(request):
+    return render(request, 'food2.html')
+
+def drinks2(request):
+    return render(request, 'drinks2.html')
+
 def search_result(request):
     qs = Restaurant.objects.all()
     location_query = request.POST.get('location')
