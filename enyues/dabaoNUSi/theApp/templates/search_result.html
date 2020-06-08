@@ -2,7 +2,7 @@
 <div class="row">
     <ul>
       {% for restaurant in queryset %}
-        <a href="{% url 'meal_list' rest_id=restaurant.id %}">
+        <a href="{% url 'theApp:meal_list' rest_id=restaurant.id%}">
           {{ restaurant }}
         </a>
         <hr />

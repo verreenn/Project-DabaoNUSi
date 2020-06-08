@@ -27,7 +27,7 @@
     <main role="main" class="container">
 
       <h3>Filter Restaurants</h3>
-      <form method="POST" action="{% url 'search_result' %}">
+      <form method="POST" action="{% url 'theApp:search_result' %}">
         {% csrf_token %}
         <div class="form-row">
             <div class="form-group col-12">

@@ -7,13 +7,15 @@ from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 def index(request):
-    return render(request, 'index.html')
+    restaurants = Restaurant.objects.all()
+    return render(request, 'index.html', {'restaurants' : restaurants, 'test':"test"})
 
 def about(request):
     return render(request, 'about-us.html')
 
 def home(request):
-    return render(request, 'index.html')
+    restaurants = Restaurant.objects.all()
+    return render(request, 'index.html',{'restaurants' : restaurants, 'test':"test"})
 
 def arise(request):
     return render(request, 'arise.html')

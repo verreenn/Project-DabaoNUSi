@@ -1,7 +1,5 @@
-from django.db import models
-
 from __future__ import unicode_literals
-
+from django.db import models
 from django.db import models
 
 from accounts.models import Profile
@@ -11,6 +9,7 @@ from theApp.models import Meal
 class OrderItem(models.Model):
     meal = models.OneToOneField(Meal, on_delete=models.SET_NULL, null=True)
     is_ordered = models.BooleanField(default=False)
+    quantity = models.IntegerField(default=1)
 
     def __str__(self):
         return self.meal.name
@@ -25,6 +24,9 @@ class Order(models.Model):
 
     def get_cart_items(self):
         return self.items.all()
+
+    def get_restaurant_id(self):
+        return self.items.all().first().meal.restaurant.id
 
     def get_cart_total(self):
         return sum([item.product.price for item in self.items.all()])

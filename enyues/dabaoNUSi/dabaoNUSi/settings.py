@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'theApp.apps.TheappConfig',
     'register.apps.RegisterConfig',
     'accounts.apps.AccountsConfig',
+    'shopping_cart.apps.ShoppingCartConfig'
 ]
 
 MIDDLEWARE = [

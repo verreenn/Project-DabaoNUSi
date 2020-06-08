@@ -123,7 +123,7 @@
                 </li>
                 <li class="nav-item">
                   <!-- contact.html is login.html -->
-                  <a class="nav-link" href="/login">Log In</a>
+                  <a class="nav-link" href="/accounts/login">Log In</a>
                 </li>
                 <li class="nav-item">
                   <a href="/search_form" class="nav-link search" id="search">
@@ -178,8 +178,10 @@
         </div>
         <div class="row">
           <!-- single course -->
+          
           <div class="col-lg-12">
             <div class="owl-carousel active_course">
+              {% for restaurant in restaurants %}
               <div class="single_course">
                 <div class="course_head">
                   <img class="img-fluid" src="{% static 'img/courses/c1.jpg' %}" alt="" />
@@ -189,7 +191,7 @@
                   <span class="tag mb-4 d-inline-block">Food</span>
                   <h4 class="mb-3">
                     <!-- course-details.html is food.html -->
-                    <a href="course-details.html">Yong Tau Foo at FASS The Deck</a>
+                    <a href="{% url 'theApp:meal_list' rest_id=restaurant.id %}">{{restaurant}}</a>
                   </h4>
                   <p>
                     Crazy popular. We are willing to queue 30 minutes for this. Worth it because we’re really getting our money’s worth. For just $3.50, we get 9 pieces of ingredients, and bee hoon, noodles or laksa soup!
@@ -211,73 +213,9 @@
                     </div>
                   </div>
                 </div>
+              
               </div>
-
-              <div class="single_course">
-                <div class="course_head">
-                  <img class="img-fluid" src="{% static 'img/courses/c2.jpg' %}" alt="" />
-                </div>
-                <div class="course_content">
-                  <span class="price">$3</span>
-                  <span class="tag mb-4 d-inline-block">Food</span>
-                  <h4 class="mb-3">
-                    <!-- course-details.html is food.html -->
-                    <a href="/sinkee">Sin Kee Famous Chicken Rice at FASS The Deck</a>
-                  </h4>
-                  <p>
-                    Sssst, it is actually better than Tian Tian Chicken Rice! and CHEAPER!
-                  </p>
-                  <div
-                    class="course_meta d-flex justify-content-lg-between align-items-lg-center flex-lg-row flex-column mt-4"
-                  >
-                    <div class="authr_meta">
-                      <img src="{% static 'img/courses/author2.png' %}" alt="" />
-                      <span class="d-inline-block ml-2">Kelvin</span>
-                    </div>
-                    <div class="mt-lg-0 mt-3">
-                      <span class="meta_info mr-4">
-                        <a href="#"> <i class="ti-user mr-2"></i>25 </a>
-                      </span>
-                      <span class="meta_info"
-                        ><a href="#"> <i class="ti-heart mr-2"></i>35 </a></span
-                      >
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="single_course">
-                <div class="course_head">
-                  <img class="img-fluid" src="{% static 'img/courses/c3.jpg' %}" alt="" />
-                </div>
-                <div class="course_content">
-                  <span class="price">$5</span>
-                  <span class="tag mb-4 d-inline-block">Food</span>
-                  <h4 class="mb-3">
-                    <!-- course-details.html is food.html -->
-                    <a href="/hwangs">Hwang's Korean at UTown</a>
-                  </h4>
-                  <p>
-                    It’s hard to miss Hwang’s Korean restaurant. Popular choice for dining in the university for homely Korean food at affordable prices.
-                  </p>
-                  <div
-                    class="course_meta d-flex justify-content-lg-between align-items-lg-center flex-lg-row flex-column mt-4"
-                  >
-                    <div class="authr_meta">
-                      <img src="{% static 'img/courses/author3.png' %}" alt="" />
-                      <span class="d-inline-block ml-2">Jessica</span>
-                    </div>
-                    <div class="mt-lg-0 mt-3">
-                      <span class="meta_info mr-4">
-                        <a href="#"> <i class="ti-user mr-2"></i>25 </a>
-                      </span>
-                      <span class="meta_info"
-                        ><a href="#"> <i class="ti-heart mr-2"></i>35 </a></span
-                      >
-                    </div>
-                  </div>
-                </div>
-              </div>
+              {% endfor %}
             </div>
           </div>
         </div>
