@@ -44,17 +44,26 @@ def add_to_cart(request, item_id):
     return redirect(reverse('theApp:meal_list', args=[rest_id]))
 
 @login_required()
-def delete_from_cart(request, item_id):
+def delete_from_cart(request, item_id, rest_id):
     item_to_delete = OrderItem.objects.filter(pk=item_id)
     if item_to_delete.exists():
         item_to_delete[0].delete()
         messages.info(request, "Item has been deleted")
-    return redirect(reverse('order_summary'))
+    return redirect(reverse('shopping_cart:order_summary', args=[rest_id]))
 
 @login_required()
-def order_details(request, **kwargs):
+def order_details(request, rest_id):
     existing_order = get_user_pending_order(request)
     context = {
-        'order': existing_order
+        'order': existing_order,
+        'rest_id': rest_id
     }
     return render(request, 'order_summary.html', context)
+
+@login_required()
+def checkout(request, order_id):
+    order = Order.objects.get(id = order_id, is_ordered=False)
+    order.save()
+    return render(request, 'index.html')
+
+

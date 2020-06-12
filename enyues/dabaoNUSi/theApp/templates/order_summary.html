@@ -1,6 +1,7 @@
-{% with rest_id=order.get_restaurant_id %}
+{% extends "base.html" %}
 
 {% block content %}
+
  <section>
    <div class="row">
     <table class="table table-hover table-bordered text-center">
@@ -16,7 +17,7 @@
           <td>
             {{ item.meal.name }}
             <span class="pull-right">
-              <a href="{% url 'shopping_cart:delete_item' item.id %}" data-balloon="remove this item from cart" class="text-danger" onclick="return confirm_delete();">
+              <a href="{% url 'shopping_cart:delete_item' item_id=item.id rest_id=rest_id%}" data-balloon="remove this item from cart" class="text-danger" onclick="return confirm_delete();">
                 <i class="fas fa-trash"></i>
               </a>
             </span>
@@ -42,18 +43,27 @@
       <tr>
         <td colspan=1 >
           <a href="{% url 'theApp:meal_list' rest_id %}" class="btn btn-warning pull-left">
-            {% if order %}Continue Shopping{% else %}Add Items to Cart {% endif %}
+            {% if order.get_cart_total != 0 %}Continue Shopping{% else %}Add Items to Cart {% endif %}
           </a> 
         </td>
-        
+      </tr>
+      <tr>
+        {% if order.get_cart_total != None %}
+          <td colspan="5">
+          <a class='btn btn-warning float-right ml-2' href="{% url 'shopping_cart:checkout' order.id %}">Proceed to checkout</a>
+          <!-- <a class='btn btn-primary float-right' href='/'>Continue shopping</a> -->
+          </td>
+        {% endif %}
       </tr>
     </table>
      
    </div>
  </section>
+
 {% endblock %}
 
 {% block scripts %}
+  {{ block.super }}
   <script>
   function confirm_delete(){
     return confirm("Do you want to remove this item from cart?");
@@ -61,4 +71,3 @@
   </script>
 {% endblock scripts %}
 
-{% endwith %}

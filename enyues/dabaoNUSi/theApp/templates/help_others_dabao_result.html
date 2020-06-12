@@ -10,7 +10,7 @@
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
     <link rel="icon" href="{% static 'img/favicon.png' %}" type="image/png" />
-    <title>Blog Details</title>
+    <title>Food</title>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}" />
     <link rel="stylesheet" href="{% static 'css/flaticon.css' %}" />
@@ -47,7 +47,7 @@
         <nav class="navbar navbar-expand-lg navbar-light">
           <div class="container">
             <!-- Brand and toggle get grouped for better mobile display -->
-            <a class="navbar-brand" href="index.html">
+            <a class="navbar-brand" href="/home">
               <img class="logo-2" src="{% static 'img/logo3.png' %}" alt="" height="80" width="150" />
             </a>
             <button
@@ -92,7 +92,6 @@
                       <a class="nav-link" href="/drinks"
                         >Drinks</a
                       >
-                    </li>
                   </ul>
                 </li>
                 <li class="nav-item submenu dropdown">
@@ -140,11 +139,11 @@
           <div class="row justify-content-center">
             <div class="col-lg-6">
               <div class="banner_content text-center">
-                <h2>Blog Details</h2>
+                <h2>Dabao Requests</h2>
                 <div class="page_link">
                   <a href="/home">Home</a>
                   <a href="/home">Dabao</a>
-                  <a href="/help-others-dabao">Help Others Dabao</a>
+                  <a href="/help_others_dabao">Help Others Dabao</a>
                 </div>
               </div>
             </div>
@@ -153,30 +152,21 @@
       </div>
     </section>
     <!--================End Home Banner Area =================-->
+    {% if queryset %}
+      <div class="row">
+        <ul>
+        {% for order in queryset %}
+        <a href="{% url 'theApp:order_detail' order.id %}">
+          Dabao Request from {{ order.get_restaurant }}
+        </a>
+          <hr />
+        {% endfor %}
+        </ul>
+      </div>
+    {% else %}
+      <p>There are no dabao requests from here</p>
+    {% endif %}
 
-    <main role="main" class="container">
-
-      <h3>Filter Restaurants</h3>
-      <form method="POST" action="{% url 'theApp:help_others_dabao_result' %}">
-        {% csrf_token %}
-        <div class="form-row">
-            <div class="form-group col-12">
-                <div class="form-group col-md-4">
-                    <label for='location'>Location</label>
-                    <select id="location" class="form-control" name="location">
-                        <option selected>Choose...</option>
-                        {% for loc in locations %}
-                        <option value="{{ loc }}">{{ loc }}</option>
-                        {% endfor %}
-                      </select>
-                </div>
-            </div>        
-        </div>
-        <button type="submit" class="btn btn-primary">Search</button>
-      </form>
-    </main>
-</body>
-    
     <!--================ Start footer Area  =================-->
     <footer class="footer-area section_gap">
       <div class="container">
@@ -184,7 +174,7 @@
           <div class="col-lg-2 col-md-6 single-footer-widget">
             <h4>DabaoNUSi</h4>
             <ul>
-              <li><a href="#">About Us</a></li>
+              <li><a href="/about">About Us</a></li>
               <li><a href="#">Video Tutorial</a></li>
               <li><a href="#">FAQ</a></li>
               <li><a href="#">Developers</a></li>
@@ -193,10 +183,10 @@
           <div class="col-lg-2 col-md-6 single-footer-widget">
             <h4>Quick Links</h4>
             <ul>
-              <li><a href="#">Food</a></li>
-              <li><a href="#">Drinks</a></li>
-              <li><a href="#">Help Me Dabao</a></li>
-              <li><a href="#">Help Others Dabao</a></li>
+              <li><a href="/food">Food</a></li>
+              <li><a href="/drinks">Drinks</a></li>
+              <li><a href="/help_me_dabao">Help Me Dabao</a></li>
+              <li><a href="/help_others_dabao">Help Others Dabao</a></li>
             </ul>
           </div>
           <div class="col-lg-2 col-md-6 single-footer-widget">
@@ -268,21 +258,21 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
         </div>
       </div>
     </footer>
-          <!--================ End footer Area  =================-->
-      
-          <!-- Optional JavaScript -->
-          <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-          <script src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
-          <script src="{% static 'js/popper.js' %}"></script>
-          <script src="{% static 'js/bootstrap.min.js' %}"></script>
-          <script src="{% static 'vendors/nice-select/js/jquery.nice-select.min.js' %}"></script>
-          <script src="{% static 'vendors/owl-carousel/owl.carousel.min.js' %}"></script>
-          <script src="{% static 'js/owl-carousel-thumb.min.js' %}"></script>
-          <script src="{% static 'js/jquery.ajaxchimp.min.js' %}"></script>
-          <script src="{% static 'js/mail-script.js' %}"></script>
-          <!--gmaps Js-->
-          <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCjCGmQ0Uq4exrzdcL6rvxywDDOvfAu6eE"></script>
-          <script src="{% static 'js/gmaps.min.js' %}"></script>
-          <script src="{% static 'js/theme.js' %}"></script>
-        </body>
-      </html>
+    <!--================ End footer Area  =================-->
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
+    <script src="{% static 'js/popper.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'vendors/nice-select/js/jquery.nice-select.min.js' %}"></script>
+    <script src="{% static 'vendors/owl-carousel/owl.carousel.min.js' %}"></script>
+    <script src="{% static 'js/owl-carousel-thumb.min.js' %}"></script>
+    <script src="{% static 'js/jquery.ajaxchimp.min.js' %}"></script>
+    <script src="{% static 'js/mail-script.js' %}"></script>
+    <!--gmaps Js-->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCjCGmQ0Uq4exrzdcL6rvxywDDOvfAu6eE"></script>
+    <script src="{% static 'js/gmaps.min.js' %}"></script>
+    <script src="{% static 'js/theme.js' %}"></script>
+  </body>
+</html>

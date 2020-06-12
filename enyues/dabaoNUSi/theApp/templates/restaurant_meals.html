@@ -22,6 +22,18 @@
   </head>
 
   <body>
+    <div class="mt-5 pt-4">
+      {% if messages %}
+          {% for message in messages %}
+          <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          {% endfor %}
+      {% endif %}
+      </div>
     <!--================ Start Header Menu Area =================-->
     <header class="header_area">
       <div class="main_menu">
@@ -152,12 +164,12 @@
         </div>
       </div>
     </section>
-
+    <!--================End Home Banner Area =================-->
 <div class="row">
     <ul>
       {% for meal in meals %}
         <li>
-            {{ meal }}
+            {{ meal.name }}
             <a href="{% url 'shopping_cart:add_to_cart' meal.id %}" class="btn btn-warning">Add to Cart</a>
         </li>
         <hr />
@@ -165,115 +177,323 @@
     </ul>
 </div>
 
-<a href="{% url 'shopping_cart:order_summary' %}" class="btn btn-warning">Go to Cart</a>
+<a href="{% url 'shopping_cart:order_summary' rest.id %}" class="btn btn-warning">Go to Cart</a>
 
+    <!--================ Start Course Details Area =================-->
+    <section class="course_details_area section_gap">
+      <div class="container">
+          <div class="row">
+              <div class="col-lg-8 course_details_left">
+                  <div class="main_image">
+                      <img class="img-fluid" src="{% static 'img/blog/main-blog/maxx.jpg' %}" alt="">
+                  </div>
+                  <div class="content_wrapper">
+                      <h4 class="title">Description</h4>
+                      <div class="content">
+                          Obsessed with reinventing the way people drink coffee and the experience around coffee, we designed modern contemporary
+                           store environments; providing a social canvas with comfortable settings and thoughtful features including co-working spaces,
+                            functional meeting rooms and manual brew bar offering select range of single origin coffees handcrafted with
+                             different brewing methods. Maxx Coffee inspires an appetite for ‘living life to the Maxx!’ A place to meet with friends and 
+                          family and experience memorable and engaging moments around great coffee, delicious food and mouthwatering beverages.
+                      </div>
+
+                      <h4 class="title">Location</h4>
+                      <div class="content">
+                        <div
+                          id="mapBox"
+                          class="mapBox"
+                          data-lat="1.2966"
+                          data-lon="103.7764"
+                          data-zoom="15"
+                          data-info="31 Lower Kent Ridge Rd, #01-04, Singapore 119087."
+                          data-mlat="1.2966"
+                          data-mlon="103.7764"
+                        ></div>
+                          <br>
+                          <br>
+                      </div>
+
+                      <h4 class="title">Help Me Dabao From This Stall, Pls!</h4>
+                      <div class="content">
+                          <ul class="course_list">
+                              {% for meal in meals %}
+                              <li class="justify-content-between d-flex">
+                                  <p>{{ meal.name }}</p>
+                                  <a href="{% url 'shopping_cart:add_to_cart' meal.id %}" class="primary-btn text-uppercase">Choose This</a>
+                              </li>
+                              {% endfor %}
+                          </ul>
+                      </div>
+                  </div>
+              </div>
+
+
+              <div class="col-lg-4 right-contents">
+                  <ul>
+                      <li>
+                          <a class="justify-content-between d-flex" href="#">
+                              <p>Stall Name</p>
+                              <span class="or">{{ rest.name }}</span>
+                          </a>
+                      </li>
+                      <li>
+                          <a class="justify-content-between d-flex" href="#">
+                              <p>Locations </p>
+                              <span>{{rest.location}}</span>
+                          </a>
+                      </li>
+                      <li>
+                          <a class="justify-content-between d-flex" href="#">
+                              <p>Average Price </p>
+                              <span>{{rest.get_avg_price}}</span>
+                          </a>
+                      </li>
+                      <li>
+                          <a class="justify-content-between d-flex" href="#">
+                              <p>Review </p>
+                              <span>3.0/5.0</span>
+                          </a>
+                      </li>
+                      <li>
+                          <a class="justify-content-between d-flex" href="#">
+                              <p>Opening Hours </p>
+                              <span>8.00 am to 6.00 pm</span>
+                          </a>
+                      </li>
+                  </ul>
+                  
+
+                  <h4 class="title">Reviews</h4>
+                  <div class="content">
+                      <div class="review-top row pt-40">
+                          <div class="col-lg-12">
+                              <h6 class="mb-15">Provide Your Rating</h6>
+                              <div class="d-flex flex-row reviews justify-content-between">
+                                  <span>Quality</span>
+                                  <div class="star">
+                                      <i class="ti-star checked"></i>
+                                      <i class="ti-star checked"></i>
+                                      <i class="ti-star checked"></i>
+                                      <i class="ti-star"></i>
+                                      <i class="ti-star"></i>
+                                  </div>
+                                  <span>Outstanding</span>
+                              </div>
+                              <div class="d-flex flex-row reviews justify-content-between">
+                                  <span>Puncuality</span>
+                                  <div class="star">
+                                      <i class="ti-star checked"></i>
+                                      <i class="ti-star checked"></i>
+                                      <i class="ti-star checked"></i>
+                                      <i class="ti-star"></i>
+                                      <i class="ti-star"></i>
+                                  </div>
+                                  <span>Outstanding</span>
+                              </div>
+                              <div class="d-flex flex-row reviews justify-content-between">
+                                  <span>Quality</span>
+                                  <div class="star">
+                                      <i class="ti-star checked"></i>
+                                      <i class="ti-star checked"></i>
+                                      <i class="ti-star checked"></i>
+                                      <i class="ti-star"></i>
+                                      <i class="ti-star"></i>
+                                  </div>
+                                  <span>Outstanding</span>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="feedeback">
+                          <h6>Your Feedback</h6>
+                          <textarea name="feedback" class="form-control" cols="10" rows="10"></textarea>
+                          <div class="mt-10 text-right">
+                              <a href="#" class="primary-btn2 text-right rounded-0 text-white">Submit</a>
+                          </div>
+                      </div>
+                      <div class="comments-area mb-30">
+                          <div class="comment-list">
+                              <div class="single-comment single-reviews justify-content-between d-flex">
+                                  <div class="user justify-content-between d-flex">
+                                      <div class="thumb">
+                                          <img src="{% static 'img/blog/c1.jpg' %}" alt="">
+                                      </div>
+                                      <div class="desc">
+                                          <h5><a href="#">Emily Low</a>
+                                              <div class="star">
+                                                  <span class="ti-star checked"></span>
+                                                  <span class="ti-star checked"></span>
+                                                  <span class="ti-star checked"></span>
+                                                  <span class="ti-star"></span>
+                                                  <span class="ti-star"></span>
+                                              </div>
+                                          </h5>
+                                          <p class="comment">
+                                              Average.
+                                          </p>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="comment-list">
+                              <div class="single-comment single-reviews justify-content-between d-flex">
+                                  <div class="user justify-content-between d-flex">
+                                      <div class="thumb">
+                                          <img src="{% static 'img/blog/c2.jpg' %}" alt="">
+                                      </div>
+                                      <div class="desc">
+                                          <h5><a href="#">Daniel</a>
+                                              <div class="star">
+                                                  <span class="ti-star checked"></span>
+                                                  <span class="ti-star checked"></span>
+                                                  <span class="ti-star checked"></span>
+                                                  <span class="ti-star checked"></span>
+                                                  <span class="ti-star checked"></span>
+                                              </div>
+                                          </h5>
+                                          <p class="comment">
+                                              Love the place!
+                                          </p>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="comment-list">
+                              <div class="single-comment single-reviews justify-content-between d-flex">
+                                  <div class="user justify-content-between d-flex">
+                                      <div class="thumb">
+                                          <img src="{% static 'img/blog/c3.jpg' %}" alt="">
+                                      </div>
+                                      <div class="desc">
+                                          <h5><a href="#">Elijah Lee</a>
+                                              <div class="star">
+                                                  <span class="ti-star checked"></span>
+                                                  <span class="ti-star checked"></span>
+                                                  <span class="ti-star checked"></span>
+                                                  <span class="ti-star"></span>
+                                                  <span class="ti-star"></span>
+                                              </div>
+                                          </h5>
+                                          <p class="comment">
+                                              Good place to hang out with friends.
+                                          </p>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </section>
+  <!--================ End Course Details Area =================-->
 
     <!--================ Start footer Area  =================-->
     <footer class="footer-area section_gap">
-        <div class="container">
-          <div class="row">
-            <div class="col-lg-2 col-md-6 single-footer-widget">
-              <h4>DabaoNUSi</h4>
-              <ul>
-                <li><a href="/about">About Us</a></li>
-                <li><a href="#">Video Tutorial</a></li>
-                <li><a href="#">FAQ</a></li>
-                <li><a href="#">Developers</a></li>
-              </ul>
-            </div>
-            <div class="col-lg-2 col-md-6 single-footer-widget">
-              <h4>Quick Links</h4>
-              <ul>
-                <li><a href="/food">Food</a></li>
-                <li><a href="/drinks">Drinks</a></li>
-                <li><a href="/help_me_dabao">Help Me Dabao</a></li>
-                <li><a href="/help_others_dabao">Help Others Dabao</a></li>
-              </ul>
-            </div>
-            <div class="col-lg-2 col-md-6 single-footer-widget">
-              <h4>Contact</h4>
-              <ul>
-                <li><a href="#">Promotion</a></li>
-                <li><a href="#">Partnerships</a></li>
-                <li><a href="#">Careers</a></li>
-                <li><a href="#">Others</a></li>
-              </ul>
-            </div>
-            <div class="col-lg-2 col-md-6 single-footer-widget">
-              <h4>Resources</h4>
-              <ul>
-                <li><a href="#">Guides</a></li>
-                <li><a href="#">Research</a></li>
-                <li><a href="#">Experts</a></li>
-                <li><a href="#">Agencies</a></li>
-              </ul>
-            </div>
-            <div class="col-lg-4 col-md-6 single-footer-widget">
-              <h4>Newsletter</h4>
-              <p>You can trust us. We only send promo offers,</p>
-              <div class="form-wrap" id="mc_embed_signup">
-                <form
-                  target="_blank"
-                  action="https://spondonit.us12.list-manage.com/subscribe/post?u=1462626880ade1ac87bd9c93a&amp;id=92a4423d01"
-                  method="get"
-                  class="form-inline"
-                >
-                  <input
-                    class="form-control"
-                    name="EMAIL"
-                    placeholder="Your Email Address"
-                    onfocus="this.placeholder = ''"
-                    onblur="this.placeholder = 'Your Email Address'"
-                    required=""
-                    type="email"
-                  />
-                  <button class="click-btn btn btn-default">
-                    <span>subscribe</span>
-                  </button>
-                  <div style="position: absolute; left: -5000px;">
-                    <input
-                      name="b_36c4fd991d266f23781ded980_aefe40901a"
-                      tabindex="-1"
-                      value=""
-                      type="text"
-                    />
-                  </div>
-  
-                  <div class="info"></div>
-                </form>
-              </div>
-            </div>
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-2 col-md-6 single-footer-widget">
+            <h4>DabaoNUSi</h4>
+            <ul>
+              <li><a href="/about">About Us</a></li>
+              <li><a href="#">Video Tutorial</a></li>
+              <li><a href="#">FAQ</a></li>
+              <li><a href="#">Developers</a></li>
+            </ul>
           </div>
-          <div class="row footer-bottom d-flex justify-content-between">
-            <p class="col-lg-8 col-sm-12 footer-text m-0 text-white">
-              <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-  Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="ti-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-  <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-            </p>
-            <div class="col-lg-4 col-sm-12 footer-social">
-              <a href="#"><i class="ti-facebook"></i></a>
-              <a href="#"><i class="ti-twitter"></i></a>
-              <a href="#"><i class="ti-dribbble"></i></a>
-              <a href="#"><i class="ti-linkedin"></i></a>
+          <div class="col-lg-2 col-md-6 single-footer-widget">
+            <h4>Quick Links</h4>
+            <ul>
+              <li><a href="/food">Food</a></li>
+              <li><a href="/drinks">Drinks</a></li>
+              <li><a href="/help_me_dabao">Help Me Dabao</a></li>
+              <li><a href="/help_others_dabao">Help Others Dabao</a></li>
+            </ul>
+          </div>
+          <div class="col-lg-2 col-md-6 single-footer-widget">
+            <h4>Contact</h4>
+            <ul>
+              <li><a href="#">Promotion</a></li>
+              <li><a href="#">Partnerships</a></li>
+              <li><a href="#">Careers</a></li>
+              <li><a href="#">Others</a></li>
+            </ul>
+          </div>
+          <div class="col-lg-2 col-md-6 single-footer-widget">
+            <h4>Resources</h4>
+            <ul>
+              <li><a href="#">Guides</a></li>
+              <li><a href="#">Research</a></li>
+              <li><a href="#">Experts</a></li>
+              <li><a href="#">Agencies</a></li>
+            </ul>
+          </div>
+          <div class="col-lg-4 col-md-6 single-footer-widget">
+            <h4>Newsletter</h4>
+            <p>You can trust us. We only send promo offers,</p>
+            <div class="form-wrap" id="mc_embed_signup">
+              <form
+                target="_blank"
+                action="https://spondonit.us12.list-manage.com/subscribe/post?u=1462626880ade1ac87bd9c93a&amp;id=92a4423d01"
+                method="get"
+                class="form-inline"
+              >
+                <input
+                  class="form-control"
+                  name="EMAIL"
+                  placeholder="Your Email Address"
+                  onfocus="this.placeholder = ''"
+                  onblur="this.placeholder = 'Your Email Address'"
+                  required=""
+                  type="email"
+                />
+                <button class="click-btn btn btn-default">
+                  <span>subscribe</span>
+                </button>
+                <div style="position: absolute; left: -5000px;">
+                  <input
+                    name="b_36c4fd991d266f23781ded980_aefe40901a"
+                    tabindex="-1"
+                    value=""
+                    type="text"
+                  />
+                </div>
+
+                <div class="info"></div>
+              </form>
             </div>
           </div>
         </div>
-      </footer>
-      <!--================ End footer Area  =================-->
-    
-        <!-- Optional JavaScript -->
-        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-        <script src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
-        <script src="{% static 'js/popper.js' %}"></script>
-        <script src="{% static 'js/bootstrap.min.js' %}"></script>
-        <script src="{% static 'vendors/nice-select/js/jquery.nice-select.min.js' %}"></script>
-        <script src="{% static 'vendors/owl-carousel/owl.carousel.min.js' %}"></script>
-        <script src="{% static 'js/owl-carousel-thumb.min.js' %}"></script>
-        <script src="{% static 'js/jquery.ajaxchimp.min.js' %}"></script>
-        <script src="{% static 'js/mail-script.js' %}"></script>
-        <!--gmaps Js-->
-        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCjCGmQ0Uq4exrzdcL6rvxywDDOvfAu6eE"></script>
-        <script src="{% static 'js/gmaps.min.js' %}"></script>
-        <script src="{% static 'js/theme.js' %}"></script>
-      </body>
+        <div class="row footer-bottom d-flex justify-content-between">
+          <p class="col-lg-8 col-sm-12 footer-text m-0 text-white">
+            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="ti-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+          </p>
+          <div class="col-lg-4 col-sm-12 footer-social">
+            <a href="#"><i class="ti-facebook"></i></a>
+            <a href="#"><i class="ti-twitter"></i></a>
+            <a href="#"><i class="ti-dribbble"></i></a>
+            <a href="#"><i class="ti-linkedin"></i></a>
+          </div>
+        </div>
+      </div>
+    </footer>
+    <!--================ End footer Area  =================-->
+  
+      <!-- Optional JavaScript -->
+      <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+      <script src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
+      <script src="{% static 'js/popper.js' %}"></script>
+      <script src="{% static 'js/bootstrap.min.js' %}"></script>
+      <script src="{% static 'vendors/nice-select/js/jquery.nice-select.min.js' %}"></script>
+      <script src="{% static 'vendors/owl-carousel/owl.carousel.min.js' %}"></script>
+      <script src="{% static 'js/owl-carousel-thumb.min.js' %}"></script>
+      <script src="{% static 'js/jquery.ajaxchimp.min.js' %}"></script>
+      <script src="{% static 'js/mail-script.js' %}"></script>
+      <!--gmaps Js-->
+      <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCjCGmQ0Uq4exrzdcL6rvxywDDOvfAu6eE"></script>
+      <script src="{% static 'js/gmaps.min.js' %}"></script>
+      <script src="{% static 'js/theme.js' %}"></script>
+    </body>
     </html>

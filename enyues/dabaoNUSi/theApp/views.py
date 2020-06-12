@@ -1,6 +1,7 @@
 from __future__ import unicode_literals
 from django.shortcuts import render
 from .models import Restaurant, Meal, Category, Location
+from shopping_cart.models import Order
 
 #rom shopping_cart.models import Order
 from django.contrib.auth.decorators import login_required
@@ -38,6 +39,57 @@ def sinkee(request):
 def yongtaufoo(request):
     return render(request, 'yongtaufoo.html')
 
+def cool_spot(request):
+    return render(request, 'cool_spot.html')
+
+def spinelli(request):
+    return render(request, 'spinelli.html')
+
+def maxx_coffee(request):
+    return render(request, 'maxx_coffee.html')
+
+def liho(request):
+    return render(request, 'liho.html')
+
+def gongcha(request):
+    return render(request, 'gongcha.html')
+
+def fass_mala(request):
+    return render(request, 'fass_mala.html')
+
+def teaparty(request):
+    return render(request, 'teaparty.html')
+
+def subway(request):
+    return render(request, 'subway.html')
+
+def ichiban(request):
+    return render(request, 'ichiban.html')
+
+def pasta_express(request):
+    return render(request, 'pasta_express.html')
+
+def deck_juice(request):
+    return render(request, 'deck_juice.html')
+
+def liji(request):
+    return render(request, 'liji.html')
+
+def the_coffee_roaster(request):
+    return render(request, 'the_coffee_roaster.html')
+
+def jewel_coffee(request):
+    return render(request, 'jewel_coffee.html')
+
+def starbucks(request):
+    return render(request, 'starbucks.html')
+    
+def food2(request):
+    return render(request, 'food2.html')
+
+def drinks2(request):
+    return render(request, 'drinks2.html')
+
 def search_result(request):
     qs = Restaurant.objects.all()
     location_query = request.POST.get('location')
@@ -71,12 +123,27 @@ def drinks(request):
     return render(request, 'drinks.html', {'categories':categories,
     'locations':locations})
 
-@login_required
+@login_required()
 def help_me_dabao(request):
     return render(request, 'help-me-dabao.html')
 
+@login_required()
 def help_others_dabao(request):
-    return render(request, 'help-others-dabao.html')
+    locations = Location.objects.all()
+    return render(request, 'help-others-dabao.html', {'locations':locations})
+
+def help_others_dabao_result(request):
+    qs = Order.objects.all()
+    location_query = request.POST.get('location')
+
+    if location_query != '' and location_query is not None and location_query != 'Choose...':
+        qs = qs.filter(location__name__icontains=location_query)
+
+    context = {
+        'queryset' : qs
+    }
+
+    return render(request, "help_others_dabao_result.html", context)
 
 def login(request):
     return render(request, 'login.html')
@@ -191,4 +258,12 @@ def meal_list(request, rest_id):
     return render(request, "restaurant_meals.html", {
         'meals':meals,
         'rest':rest
+        })
+
+def order_detail(request, order_id):
+    order = Order.objects.filter(id=order_id).first()
+    meals = order.get_cart_items
+    return render(request, "order_detail.html", {
+        'order':order,
+        'meals':meals
         })

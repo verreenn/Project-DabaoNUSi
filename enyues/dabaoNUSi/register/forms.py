@@ -26,10 +26,11 @@ class LoginForm(forms.Form):
 
 class RegisterForm(UserCreationForm):
     email = forms.EmailField(label='Email Address')
+    phone = forms.CharField(label='Contact Number')
 
     class Meta:
         model = User
-        fields = ["username", "email", "password1", "password2"]
+        fields = ["username", "email", "password1", "password2", "phone"]
 
 
     
