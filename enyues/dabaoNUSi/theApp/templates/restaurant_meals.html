@@ -179,6 +179,21 @@
 
 <a href="{% url 'shopping_cart:order_summary' rest.id %}" class="btn btn-warning">Go to Cart</a>
 
+<h1>Leave A Comment</h1>
+<form method='POST' action="{% url 'theApp:add_comment' rest.id%}">
+{% csrf_token %}
+{{ form_comment.as_p }}
+<button type='sumbit'>Submit</button>
+</form>
+
+<h1>Add A Rating</h1>
+<form method='POST' action="{% url 'theApp:add_rating' rest.id%}">
+{% csrf_token %}
+{{ form_rating.as_p }}
+<button type='sumbit'>Submit</button>
+</form>
+
+
     <!--================ Start Course Details Area =================-->
     <section class="course_details_area section_gap">
       <div class="container">

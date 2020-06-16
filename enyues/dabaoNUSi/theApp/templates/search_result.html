@@ -89,9 +89,7 @@
                       <a class="nav-link" href="/food">Food</a>
                     </li>
                     <li class="nav-item">
-                      <a class="nav-link" href="/drinks"
-                        >Drinks</a
-                      >
+                      <a class="nav-link" href="/drinks">Drinks</a>
                   </ul>
                 </li>
                 <li class="nav-item submenu dropdown">
@@ -153,6 +151,23 @@
     </section>
     <!--================End Home Banner Area =================-->
     {% if queryset %}
+      <div class="nav-item submenu dropdown active">
+        <a
+          href="#"
+          class="nav-link dropdown-toggle"
+          data-toggle="dropdown"
+          role="button"
+          aria-haspopup="true"
+          aria-expanded="false"
+        >Sort By</a>
+        <ul class="dropdown-menu">
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'theApp:search_result' %}?sort=average_price">Price</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'theApp:search_result' %}?sort=average_rating">Rating</a>
+        </ul>
+      </div>
       <div class="row">
         <ul>
         {% for restaurant in queryset %}

@@ -1,8 +1,9 @@
 from __future__ import unicode_literals
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404, redirect
 from .models import Restaurant, Meal, Category, Location
+from accounts.models import Profile
 from shopping_cart.models import Order
-
+from .forms import CommentForm, RateForm
 #rom shopping_cart.models import Order
 from django.contrib.auth.decorators import login_required
 
@@ -95,6 +96,7 @@ def search_result(request):
     location_query = request.POST.get('location')
     category_query = request.POST.get('category')
     restaurant_name_query = request.POST.get('name')
+    sort_query = request.GET.get('sort', 'id')
 
     if location_query != '' and location_query is not None:
         qs = qs.filter(location__name__icontains=location_query)
@@ -105,8 +107,15 @@ def search_result(request):
     if restaurant_name_query != '' and restaurant_name_query is not None:
         qs = qs.filter(name__icontains=category_query)
 
+    if sort_query == 'average_price':
+        qs = sorted(qs, key=lambda a: a.get_avg_price(), reverse=True)
+    elif sort_query == 'average_rating':
+        qs = sorted(qs, key=lambda a: a.get_avg_rating(), reverse=True)
+
+    test = sort_query == 'average_rating'
     context = {
-        'queryset' : qs
+        'queryset' : qs,
+        'test':test
     }
 
     return render(request, "search_result.html", context)
@@ -255,9 +264,13 @@ def frontier_drink(request):
 def meal_list(request, rest_id):
     meals = Meal.objects.filter(restaurant__id=rest_id)
     rest = Restaurant.objects.filter(id=rest_id).first()
+    form_comment = CommentForm()
+    form_rating = RateForm()
     return render(request, "restaurant_meals.html", {
         'meals':meals,
-        'rest':rest
+        'rest':rest,
+        'form_rating':form_rating,
+        'form_comment':form_comment
         })
 
 def order_detail(request, order_id):
@@ -267,3 +280,27 @@ def order_detail(request, order_id):
         'order':order,
         'meals':meals
         })
+
+def add_comment(request, rest_id):
+    restaurant = get_object_or_404(Restaurant, id=rest_id)
+    user_profile = Profile.objects.get(id=request.user.id)
+    if request.method == "POST":
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.restaurant = restaurant
+            comment.user = user_profile
+            comment.save()
+    return redirect('theApp:meal_list', rest_id=rest_id)
+    
+def add_rating(request, rest_id):
+    restaurant = get_object_or_404(Restaurant, id=rest_id)
+    user_profile = Profile.objects.get(id=request.user.id)
+    if request.method == "POST":
+        form = RateForm(request.POST)
+        if form.is_valid():
+            rate = form.save(commit=False)
+            rate.restaurant = restaurant
+            rate.user = user_profile
+            rate.save()
+    return redirect('theApp:meal_list', rest_id=rest_id)
