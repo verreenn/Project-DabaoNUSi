@@ -15,9 +15,41 @@ class Category(models.Model):
     def __str__(self):
         return self.name
 
+class Reviews(models.Model):
+    name = models.CharField(max_length=120)
+
+    def __str__(self):
+        return self.name
+
+class Dietary(models.Model):
+    name = models.CharField(max_length=120)
+
+    def __str__(self):
+        return self.name
+
+class Other(models.Model):
+    name = models.CharField(max_length=120)
+
+    def __str__(self):
+        return self.name
+
+class Price(models.Model):
+    name = models.CharField(max_length=120)
+
+    def __str__(self):
+        return self.name
+
+class Destination(models.Model):
+    name = models.CharField(max_length=120)
+
+    def __str__(self):
+        return self.name
+
 class Restaurant(models.Model):
     name = models.CharField(max_length=120)
     location = models.ForeignKey(Location, on_delete = models.CASCADE)
+    #reviews = models.ForeignKey(Reviews, on_delete = models.CASCADE, default= "More Than 1 Star")
+    #prices = models.ForeignKey(Price, on_delete = models.CASCADE, default="Less Than $20")
     categories = models.ManyToManyField(Category)
     food = models.BooleanField(default=True)
     average_price = models.FloatField(default=0)

@@ -1,6 +1,6 @@
 from __future__ import unicode_literals
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Restaurant, Meal, Category, Location
+from .models import Restaurant, Meal, Category, Location, Reviews, Price, Dietary, Other, Destination
 from accounts.models import Profile
 from shopping_cart.models import Order
 from .forms import CommentForm, RateForm
@@ -132,14 +132,20 @@ def drinks(request):
     return render(request, 'drinks.html', {'categories':categories,
     'locations':locations})
 
-@login_required()
+#@login_required()
 def help_me_dabao(request):
-    return render(request, 'help-me-dabao.html')
+    locations = Location.objects.all()
+    reviews = Reviews.objects.all()
+    prices = Price.objects.all()
+    dietarys = Dietary.objects.all()
+    others = Other.objects.all()
+    return render(request, 'help-me-dabao.html', {'locations':locations, 'reviews':reviews, 'prices':prices, 'dietarys':dietarys, 'others':others})
 
-@login_required()
+#@login_required()
 def help_others_dabao(request):
     locations = Location.objects.all()
-    return render(request, 'help-others-dabao.html', {'locations':locations})
+    destinations = Destination.objects.all()
+    return render(request, 'help-others-dabao.html', {'locations':locations, 'destinations':destinations})
 
 def help_others_dabao_result(request):
     qs = Order.objects.all()
@@ -154,8 +160,9 @@ def help_others_dabao_result(request):
 
     return render(request, "help_others_dabao_result.html", context)
 
+@login_required()
 def login(request):
-    return render(request, 'login.html')
+    return render(request, 'login_old.html')
 
 def search_form(request):
     categories = Category.objects.all()
