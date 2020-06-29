@@ -151,6 +151,7 @@
     </section>
     <!--================End Home Banner Area =================-->
     {% if queryset %}
+      <!--
       <div class="nav-item submenu dropdown active">
         <a
           href="#"
@@ -162,17 +163,22 @@
         >Sort By</a>
         <ul class="dropdown-menu">
           <li class="nav-item">
-            <a class="nav-link" href="{% url 'theApp:search_result' %}?sort=average_price">Price</a>
+            <a class="nav-link" href="{% url 'theApp:search_result' %}?sort=average_price_desc">Price Descending</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{% url 'theApp:search_result' %}?sort=average_rating">Rating</a>
+            <a class="nav-link" href="{% url 'theApp:search_result' %}?sort=average_price_asc">Price Ascending</a>
         </ul>
       </div>
+      -->
+      {{test}}
+      {{test1}}
+      {{test2}}
       <div class="row">
         <ul>
         {% for restaurant in queryset %}
         <a href="{% url 'theApp:meal_list' rest_id=restaurant.id %}">
-          {{ restaurant }}
+          <h4>{{ restaurant }}</h4>
+          <h5>Average Price : {{ restaurant.get_avg_price }}</h5>
         </a>
           <hr />
         {% endfor %}

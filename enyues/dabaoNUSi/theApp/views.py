@@ -96,9 +96,11 @@ def search_result(request):
     location_query = request.POST.get('location')
     category_query = request.POST.get('category')
     restaurant_name_query = request.POST.get('name')
-    sort_query = request.GET.get('sort', 'id')
+    #sort_query = request.GET.get('sort', 'id')
+    sort_query = request.POST.get('sort')
     rating_query = request.POST.get('rating')
     price_query = request.POST.get('price')
+    prices_query = request.POST.get('prices')
 
     if location_query != '' and location_query is not None:
         qs = qs.filter(location__name__icontains=location_query)
@@ -107,12 +109,7 @@ def search_result(request):
         qs = qs.filter(categories__name=category_query)
 
     if restaurant_name_query != '' and restaurant_name_query is not None:
-        qs = qs.filter(name__icontains=category_query)
-
-    if sort_query == 'average_price':
-        qs = sorted(qs, key=lambda a: a.get_avg_price(), reverse=True)
-    elif sort_query == 'average_rating':
-        qs = sorted(qs, key=lambda a: a.get_avg_rating(), reverse=True)
+        qs = qs.filter(name__icontains=restaurant_name_query)
 
     if rating_query != '' and rating_query is not None and rating_query != 'Choose...':
         if rating_query == "More Than 1 Star":
@@ -131,13 +128,25 @@ def search_result(request):
             rest_ids = [rest.id for rest in Restaurant.objects.all() if rest.get_avg_rating() == 5]
             qs = qs.filter(id__in=rest_ids)
     
-    if price_query != '' and price_query is not None and price_query != 'Choose...':
-        if price_query == "Less Than $5":
-            qs = qs.filter(prices__name="Less Than $5")
-        elif price_query == "Less Than $10":
-            qs = qs.filter(prices__name="Less Than $10")
-        elif price_query == "Less Than $20":
-            qs = qs.filter(prices__name="Less Than $20")
+    if prices_query != '' and prices_query is not None and prices_query != 'Choose...':
+        if prices_query == "Less Than $5":
+            rest_ids = [rest.id for rest in Restaurant.objects.all() if rest.get_avg_price() <= 5]
+            qs = qs.filter(id__in=rest_ids)
+        elif prices_query == "Less Than $10":
+            rest_ids = [rest.id for rest in Restaurant.objects.all() if rest.get_avg_price() <= 10]
+            qs = qs.filter(id__in=rest_ids)
+        elif prices_query == "Less Than $20":
+            rest_ids = [rest.id for rest in Restaurant.objects.all() if rest.get_avg_price() <= 20]
+            qs = qs.filter(id__in=rest_ids)
+
+    rest_ids = [rest.id for rest in Restaurant.objects.all() if rest.get_avg_price() <= 5]
+
+    if sort_query != '' and sort_query is not None and sort_query != 'Choose...':
+        if sort_query == 'average_price_desc':
+            qs = sorted(qs, key=lambda a: a.get_avg_price(), reverse=True)
+        elif sort_query == 'average_price_asc':
+            qs = sorted(qs, key=lambda a: a.get_avg_price(), reverse=False)
+
     context = {
         'queryset' : qs,
     }
@@ -183,6 +192,9 @@ def help_others_dabao_result(request):
     }
 
     return render(request, "help_others_dabao_result.html", context)
+
+def login_test(request):
+    return render(request, "login_test.html")
 
 @login_required()
 def login(request):

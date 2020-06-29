@@ -178,7 +178,7 @@
     </ul>
 </div>
 -->
-
+<!--
 <h1>Add A Rating</h1>
 <form method='POST' action="{% url 'theApp:add_rating' rest.id%}">
 {% csrf_token %}
@@ -186,7 +186,7 @@
 <button type='sumbit'>Submit</button>
 
 </form>
-
+-->
 
     <!--================ Start Course Details Area =================-->
     <section class="course_details_area section_gap">
@@ -254,12 +254,14 @@
                               <span>${{rest.get_avg_price}}</span>
                           </a>
                       </li>
+                      <!--
                       <li>
                           <a class="justify-content-between d-flex" href="#">
                               <p>Review </p>
                               <span>{{rest.get_avg_rating}}/5.0</span>
                           </a>
                       </li>
+                      -->
                       <li>
                           <a class="justify-content-between d-flex" href="#">
                               <p>Opening Hours </p>
@@ -268,7 +270,7 @@
                       </li>
                   </ul>
                   
-
+                  <!--
                   <h4 class="title">Reviews</h4>
                   <div class="content">
                       <div class="review-top row pt-40">
@@ -309,6 +311,7 @@
                               </div>
                           </div>
                       </div>
+                      -->
                       <div class="feedeback">
                           <h6>Your Feedback</h6>
                           <form method='POST' action="{% url 'theApp:add_comment' rest.id%}">
