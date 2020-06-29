@@ -28,6 +28,7 @@ urlpatterns = [
     path('help_me_dabao/', views.help_me_dabao, name='help me dabao'),
     path('help_others_dabao/', views.help_others_dabao, name='help others tabao'),
     path('login/', views.login, name='login'),
+    path('login_test/', views.login_test, name='login_test'),
     path('arise/', views.arise, name='arise'),
     path('atempo/', views.atempo, name='atempo'),
     path('barbar/', views.barbar, name='barbar'),

@@ -160,6 +160,9 @@ def help_others_dabao_result(request):
 
     return render(request, "help_others_dabao_result.html", context)
 
+def login_test(request):
+    return render(request, "login_test.html")
+
 @login_required()
 def login(request):
     return render(request, 'login_old.html')
