@@ -17,7 +17,8 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf.urls import url
 from register.views import login_view, register_view, logout_view
-
+from django.conf import settings
+from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include(('theApp.urls', 'theApp'), namespace='theApp')),
@@ -25,5 +26,4 @@ urlpatterns = [
     path('accounts/register/', register_view),
     path('accounts/logout/', logout_view),
     path('', include(('shopping_cart.urls','shopping_cart'), namespace='shopping_cart')),
-]
-
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

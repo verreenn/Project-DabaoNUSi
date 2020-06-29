@@ -1,6 +1,6 @@
 from __future__ import unicode_literals
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Restaurant, Meal, Category, Location, Reviews, Price, Dietary, Other, Destination
+from .models import Restaurant, Meal, Category, Location, Reviews, Price, Dietary, Other, Destination, Comment
 from accounts.models import Profile
 from shopping_cart.models import Order
 from .forms import CommentForm, RateForm
@@ -10,17 +10,17 @@ from django.contrib.auth.decorators import login_required
 # Create your views here.
 def index(request):
     restaurants = Restaurant.objects.all()
-    return render(request, 'index.html', {'restaurants' : restaurants, 'test':"test"})
+    return render(request, 'index.html', {'restaurants' : restaurants})
 
 def about(request):
     return render(request, 'about-us.html')
 
 def home(request):
     restaurants = Restaurant.objects.all()
-    return render(request, 'index.html',{'restaurants' : restaurants, 'test':"test"})
+    return render(request, 'index.html',{'restaurants' : restaurants})
 
 def arise(request):
-    return render(request, 'arise.html')
+    return meal_list(request, 1)
 
 def atempo(request):
     return render(request, 'atempo.html')
@@ -97,6 +97,8 @@ def search_result(request):
     category_query = request.POST.get('category')
     restaurant_name_query = request.POST.get('name')
     sort_query = request.GET.get('sort', 'id')
+    rating_query = request.POST.get('rating')
+    price_query = request.POST.get('price')
 
     if location_query != '' and location_query is not None:
         qs = qs.filter(location__name__icontains=location_query)
@@ -112,10 +114,32 @@ def search_result(request):
     elif sort_query == 'average_rating':
         qs = sorted(qs, key=lambda a: a.get_avg_rating(), reverse=True)
 
-    test = sort_query == 'average_rating'
+    if rating_query != '' and rating_query is not None and rating_query != 'Choose...':
+        if rating_query == "More Than 1 Star":
+            rest_ids = [rest.id for rest in Restaurant.objects.all() if rest.get_avg_rating() >= 1]
+            qs = qs.filter(id__in=rest_ids)
+        elif rating_query == "More Than 2 Stars":
+            rest_ids = [rest.id for rest in Restaurant.objects.all() if rest.get_avg_rating() >= 2]
+            qs = qs.filter(id__in=rest_ids)
+        elif rating_query == "More Than 3 Stars":
+            rest_ids = [rest.id for rest in Restaurant.objects.all() if rest.get_avg_rating() >= 3]
+            qs = qs.filter(id__in=rest_ids)
+        elif rating_query == "More Than 4 Stars":
+            rest_ids = [rest.id for rest in Restaurant.objects.all() if rest.get_avg_rating() >= 4]
+            qs = qs.filter(id__in=rest_ids)
+        elif rating_query == "5 Stars":
+            rest_ids = [rest.id for rest in Restaurant.objects.all() if rest.get_avg_rating() == 5]
+            qs = qs.filter(id__in=rest_ids)
+    
+    if price_query != '' and price_query is not None and price_query != 'Choose...':
+        if price_query == "Less Than $5":
+            qs = qs.filter(prices__name="Less Than $5")
+        elif price_query == "Less Than $10":
+            qs = qs.filter(prices__name="Less Than $10")
+        elif price_query == "Less Than $20":
+            qs = qs.filter(prices__name="Less Than $20")
     context = {
         'queryset' : qs,
-        'test':test
     }
 
     return render(request, "search_result.html", context)
@@ -166,7 +190,9 @@ def login(request):
 
 def search_form(request):
     categories = Category.objects.all()
-    return render(request, 'search_form.html', {'categories':categories})
+    reviews = Reviews.objects.all()
+    prices = Price.objects.all()
+    return render(request, 'search_form.html', {'categories':categories, 'ratings':reviews, 'prices':prices})
 
 def chinese(request):
     qs = Restaurant.objects.filter(categories__name='Chinese')
@@ -271,13 +297,15 @@ def frontier_drink(request):
 def meal_list(request, rest_id):
     meals = Meal.objects.filter(restaurant__id=rest_id)
     rest = Restaurant.objects.filter(id=rest_id).first()
+    comments = Comment.objects.filter(restaurant__id=rest_id)[:5]
     form_comment = CommentForm()
     form_rating = RateForm()
     return render(request, "restaurant_meals.html", {
         'meals':meals,
         'rest':rest,
         'form_rating':form_rating,
-        'form_comment':form_comment
+        'form_comment':form_comment,
+        'comments':comments
         })
 
 def order_detail(request, order_id):

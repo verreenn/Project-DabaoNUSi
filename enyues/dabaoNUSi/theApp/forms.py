@@ -4,7 +4,7 @@ from  .models import Comment, Rate
 class CommentForm(forms.ModelForm):
     class Meta:
         model = Comment
-        fields = ('body',)
+        fields = ('comment',)
 
 class RateForm(forms.ModelForm):
     class Meta:

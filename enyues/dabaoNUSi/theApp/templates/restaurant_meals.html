@@ -165,7 +165,8 @@
       </div>
     </section>
     <!--================End Home Banner Area =================-->
-<div class="row">
+<!--
+    <div class="row">
     <ul>
       {% for meal in meals %}
         <li>
@@ -176,21 +177,14 @@
       {% endfor %}
     </ul>
 </div>
-
-<a href="{% url 'shopping_cart:order_summary' rest.id %}" class="btn btn-warning">Go to Cart</a>
-
-<h1>Leave A Comment</h1>
-<form method='POST' action="{% url 'theApp:add_comment' rest.id%}">
-{% csrf_token %}
-{{ form_comment.as_p }}
-<button type='sumbit'>Submit</button>
-</form>
+-->
 
 <h1>Add A Rating</h1>
 <form method='POST' action="{% url 'theApp:add_rating' rest.id%}">
 {% csrf_token %}
 {{ form_rating.as_p }}
 <button type='sumbit'>Submit</button>
+
 </form>
 
 
@@ -200,16 +194,12 @@
           <div class="row">
               <div class="col-lg-8 course_details_left">
                   <div class="main_image">
-                      <img class="img-fluid" src="{% static 'img/blog/main-blog/maxx.jpg' %}" alt="">
+                      <img class="img-fluid" src="{{rest.image.url}}" alt="">
                   </div>
                   <div class="content_wrapper">
                       <h4 class="title">Description</h4>
                       <div class="content">
-                          Obsessed with reinventing the way people drink coffee and the experience around coffee, we designed modern contemporary
-                           store environments; providing a social canvas with comfortable settings and thoughtful features including co-working spaces,
-                            functional meeting rooms and manual brew bar offering select range of single origin coffees handcrafted with
-                             different brewing methods. Maxx Coffee inspires an appetite for ‘living life to the Maxx!’ A place to meet with friends and 
-                          family and experience memorable and engaging moments around great coffee, delicious food and mouthwatering beverages.
+                        {{rest.description}}
                       </div>
 
                       <h4 class="title">Location</h4>
@@ -239,6 +229,7 @@
                               {% endfor %}
                           </ul>
                       </div>
+                      <a href="{% url 'shopping_cart:order_summary' rest.id %}" class="btn btn-warning">Go to Cart</a>
                   </div>
               </div>
 
@@ -260,19 +251,19 @@
                       <li>
                           <a class="justify-content-between d-flex" href="#">
                               <p>Average Price </p>
-                              <span>{{rest.get_avg_price}}</span>
+                              <span>${{rest.get_avg_price}}</span>
                           </a>
                       </li>
                       <li>
                           <a class="justify-content-between d-flex" href="#">
                               <p>Review </p>
-                              <span>3.0/5.0</span>
+                              <span>{{rest.get_avg_rating}}/5.0</span>
                           </a>
                       </li>
                       <li>
                           <a class="justify-content-between d-flex" href="#">
                               <p>Opening Hours </p>
-                              <span>8.00 am to 6.00 pm</span>
+                              <span>{{rest.hour}}</span>
                           </a>
                       </li>
                   </ul>
@@ -320,81 +311,27 @@
                       </div>
                       <div class="feedeback">
                           <h6>Your Feedback</h6>
-                          <textarea name="feedback" class="form-control" cols="10" rows="10"></textarea>
-                          <div class="mt-10 text-right">
-                              <a href="#" class="primary-btn2 text-right rounded-0 text-white">Submit</a>
-                          </div>
+                          <form method='POST' action="{% url 'theApp:add_comment' rest.id%}">
+                            {% csrf_token %}
+                            {{ form_comment }}
+                            <button type='sumbit'>Submit</button>
+                            </form>
                       </div>
                       <div class="comments-area mb-30">
-                          <div class="comment-list">
-                              <div class="single-comment single-reviews justify-content-between d-flex">
-                                  <div class="user justify-content-between d-flex">
-                                      <div class="thumb">
-                                          <img src="{% static 'img/blog/c1.jpg' %}" alt="">
-                                      </div>
-                                      <div class="desc">
-                                          <h5><a href="#">Emily Low</a>
-                                              <div class="star">
-                                                  <span class="ti-star checked"></span>
-                                                  <span class="ti-star checked"></span>
-                                                  <span class="ti-star checked"></span>
-                                                  <span class="ti-star"></span>
-                                                  <span class="ti-star"></span>
-                                              </div>
-                                          </h5>
-                                          <p class="comment">
-                                              Average.
-                                          </p>
-                                      </div>
-                                  </div>
+                          {% for comment in comments%}
+                          <div class = "comment-list">
+                            <div class="single-comment single-reviews justify-content-between d-flex">
+                              <div class="user justify-content-between d-flex">
+                                <div class="desc">
+                                    <h5><a href="#">{{comment.user}}</a></h5>
+                                    <p class="comment">
+                                      {{comment.comment}}
+                                    </p>
+                                </div>
                               </div>
+                            </div>
                           </div>
-                          <div class="comment-list">
-                              <div class="single-comment single-reviews justify-content-between d-flex">
-                                  <div class="user justify-content-between d-flex">
-                                      <div class="thumb">
-                                          <img src="{% static 'img/blog/c2.jpg' %}" alt="">
-                                      </div>
-                                      <div class="desc">
-                                          <h5><a href="#">Daniel</a>
-                                              <div class="star">
-                                                  <span class="ti-star checked"></span>
-                                                  <span class="ti-star checked"></span>
-                                                  <span class="ti-star checked"></span>
-                                                  <span class="ti-star checked"></span>
-                                                  <span class="ti-star checked"></span>
-                                              </div>
-                                          </h5>
-                                          <p class="comment">
-                                              Love the place!
-                                          </p>
-                                      </div>
-                                  </div>
-                              </div>
-                          </div>
-                          <div class="comment-list">
-                              <div class="single-comment single-reviews justify-content-between d-flex">
-                                  <div class="user justify-content-between d-flex">
-                                      <div class="thumb">
-                                          <img src="{% static 'img/blog/c3.jpg' %}" alt="">
-                                      </div>
-                                      <div class="desc">
-                                          <h5><a href="#">Elijah Lee</a>
-                                              <div class="star">
-                                                  <span class="ti-star checked"></span>
-                                                  <span class="ti-star checked"></span>
-                                                  <span class="ti-star checked"></span>
-                                                  <span class="ti-star"></span>
-                                                  <span class="ti-star"></span>
-                                              </div>
-                                          </h5>
-                                          <p class="comment">
-                                              Good place to hang out with friends.
-                                          </p>
-                                      </div>
-                                  </div>
-                              </div>
-                          </div>
+                          {% endfor %}
                       </div>
                   </div>
               </div>

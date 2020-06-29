@@ -45,15 +45,24 @@ class Destination(models.Model):
     def __str__(self):
         return self.name
 
+def get_default_reviews():
+    return Reviews.objects.get_or_create(name="More Than 1 Star")
+
+def get_default_price():
+    return Price.objects.get_or_create(name="Less Than $20")
+
 class Restaurant(models.Model):
     name = models.CharField(max_length=120)
     location = models.ForeignKey(Location, on_delete = models.CASCADE)
-    #reviews = models.ForeignKey(Reviews, on_delete = models.CASCADE, default= "More Than 1 Star")
-    #prices = models.ForeignKey(Price, on_delete = models.CASCADE, default="Less Than $20")
+    reviews = models.ForeignKey(Reviews, on_delete = models.CASCADE, default=1)
+    prices = models.ForeignKey(Price, on_delete = models.CASCADE, default=3)
     categories = models.ManyToManyField(Category)
     food = models.BooleanField(default=True)
     average_price = models.FloatField(default=0)
     average_rating = models.FloatField(default=0)
+    image = models.ImageField(upload_to='restaurant', default='arise-and-shine.jpg')
+    description = models.CharField(max_length=100000, default="This restaurant is nice")
+    hour = models.CharField(max_length=100, default="8.00 am to 6.00 pm")
 
     def __str__(self):
         return self.name + " at " + self.location.__str__()
@@ -79,16 +88,16 @@ class Restaurant(models.Model):
 
 class Meal(models.Model):
     name = models.CharField(max_length=120)
-    price = models.IntegerField(default=0)
+    price = models.FloatField(default=0)
     restaurant = models.ForeignKey(Restaurant, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.name #+ " price: " + str(self.price) + " served by " + str(self.restaurant)
+        return self.name
 
 class Comment(models.Model):
     user = models.ForeignKey(Profile, on_delete=models.CASCADE)
     restaurant = models.ForeignKey(Restaurant, on_delete=models.CASCADE)
-    body = models.TextField()
+    comment = models.TextField()
 
     def __str__(self):
         return self.user.user.username

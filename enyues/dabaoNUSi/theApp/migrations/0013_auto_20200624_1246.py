@@ -14,11 +14,11 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='restaurant',
             name='prices',
-            field=models.ForeignKey(default='Less Than $20', on_delete=django.db.models.deletion.CASCADE, to='theApp.Price'),
+            field=models.ForeignKey(default=1, on_delete=django.db.models.deletion.CASCADE, to='theApp.Price'),
         ),
         migrations.AddField(
             model_name='restaurant',
             name='reviews',
-            field=models.ForeignKey(default='More Than 1 Star', on_delete=django.db.models.deletion.CASCADE, to='theApp.Reviews'),
+            field=models.ForeignKey(default=1, on_delete=django.db.models.deletion.CASCADE, to='theApp.Reviews'),
         ),
     ]

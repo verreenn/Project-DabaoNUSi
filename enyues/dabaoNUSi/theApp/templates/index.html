@@ -178,23 +178,22 @@
         </div>
         <div class="row">
           <!-- single course -->
-          
           <div class="col-lg-12">
             <div class="owl-carousel active_course">
               {% for restaurant in restaurants %}
               <div class="single_course">
                 <div class="course_head">
-                  <img class="img-fluid" src="{% static 'img/courses/c1.jpg' %}" alt="" />
+                  <img class="img-fluid" src="{{restaurant.image.url}}" alt="" />
                 </div>
                 <div class="course_content">
-                  <span class="price">$4</span>
+                  <span class="price">${{restaurant.get_avg_price}}</span>
                   <span class="tag mb-4 d-inline-block">Food</span>
                   <h4 class="mb-3">
                     <!-- course-details.html is food.html -->
                     <a href="{% url 'theApp:meal_list' rest_id=restaurant.id %}">{{restaurant}}</a>
                   </h4>
                   <p>
-                    Crazy popular. We are willing to queue 30 minutes for this. Worth it because we’re really getting our money’s worth. For just $3.50, we get 9 pieces of ingredients, and bee hoon, noodles or laksa soup!
+                    {{restaurant.description}}
                   </p>
                   <div
                     class="course_meta d-flex justify-content-lg-between align-items-lg-center flex-lg-row flex-column mt-4"

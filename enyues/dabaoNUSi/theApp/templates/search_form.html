@@ -66,6 +66,32 @@
                 </div>
             </div>        
         </div>
+        <div class="form-row">
+            <div class="form-group col-12">
+                <div class="form-group col-md-4">
+                    <label for='rating'>Rating</label>
+                    <select id="rating" class="form-control" name="rating">
+                        <option selected>Choose...</option>
+                        {% for rat in ratings %}
+                        <option value="{{ rat }}">{{ rat }}</option>
+                        {% endfor %}
+                      </select>
+                </div>
+            </div>        
+        </div>
+        <div class="form-row">
+            <div class="form-group col-12">
+                <div class="form-group col-md-4">
+                    <label for='price'>Average Price</label>
+                    <select id="price" class="form-control" name="price">
+                        <option selected>Choose...</option>
+                        {% for price in prices %}
+                        <option value="{{ price }}">{{ price }}</option>
+                        {% endfor %}
+                      </select>
+                </div>
+            </div>        
+        </div>
         <button type="submit" class="btn btn-primary">Search</button>
       </form>
     </main>
