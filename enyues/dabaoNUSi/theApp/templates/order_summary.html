@@ -1,73 +1,212 @@
 {% extends "base.html" %}
+{% load static %}
 
-{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <link rel="icon" href="{% static 'img/favicon.png' %}" type="image/png" />
+    <title>Food Cart</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/flaticon.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/themify-icons.css' %}" />
+    <link rel="stylesheet" href="{% static 'vendors/owl-carousel/owl.carousel.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'vendors/nice-select/css/nice-select.css' %}" />
+    <!-- main css -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+  </head>
 
- <section>
-   <div class="row">
-    <table class="table table-hover table-bordered text-center">
-      <tr class="text-center">
-        <th>no.</th>
-        <th>Item</th>
-        <th>Price</th>
-      </tr>
-      {% for item in order.get_cart_items %}
-      
-        <tr>
-          <td>{{ forloop.counter }}</td>
-          <td>
-            {{ item.meal.name }}
-            <span class="pull-right">
-              <a href="{% url 'shopping_cart:delete_item' item_id=item.id rest_id=rest_id%}" data-balloon="remove this item from cart" class="text-danger" onclick="return confirm_delete();">
-                <i class="fas fa-trash"></i>
-              </a>
-            </span>
-          </td>
-          <td>{{ item.meal.price }}</td>
-        </tr>
-      {% empty %}
-        <tr>
-          <td colspan= 3> You have not added any items yet.</td>
-        </tr>
-      {% endfor %}
-      <tr>
-        {% if order.get_cart_total != None %}
-        <td colspan=2>
-          <strong class="pull-right">Order Total:</strong>
-        </td>
+  <body>
+    <!--================ Start Header Menu Area =================-->
+    <header class="header_area">
+      <div class="main_menu">
+        <div class="search_input" id="search_input_box">
+          <div class="container">
+            <form class="d-flex justify-content-between" method="" action="">
+              <input
+                type="text"
+                class="form-control"
+                id="search_input"
+                placeholder="Search Here"
+              />
+              <button type="submit" class="btn"></button>
+              <span
+                class="ti-close"
+                id="close_search"
+                title="Close Search"
+              ></span>
+            </form>
+          </div>
+        </div>
+
+        {% block content %}
+        <nav class="navbar navbar-expand-lg navbar-light">
+          <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <a class="navbar-brand" href="/home">
+              <img class="logo-2" src="{% static 'img/logo3.png' %}" alt="" height="80" width="150"/>
+            </a>
+            <button
+              class="navbar-toggler"
+              type="button"
+              data-toggle="collapse"
+              data-target="#navbarSupportedContent"
+              aria-controls="navbarSupportedContent"
+              aria-expanded="false"
+              aria-label="Toggle navigation"
+            >
+              <span class="icon-bar"></span> <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div
+              class="collapse navbar-collapse offset"
+              id="navbarSupportedContent"
+            >
+              <ul class="nav navbar-nav menu_nav ml-auto">
+                <li class="nav-item">
+                  <a class="nav-link" href="/home">Home</a>
+                </li>
+                <li class="nav-item active">
+                  <a class="nav-link" href="/about">About</a>
+                </li>
+                <li class="nav-item submenu dropdown">
+                  <a
+                    href="#"
+                    class="nav-link dropdown-toggle"
+                    data-toggle="dropdown"
+                    role="button"
+                    aria-haspopup="true"
+                    aria-expanded="false"
+                    >Food and Beverages</a
+                  >
+                  <ul class="dropdown-menu">
+                    <li class="nav-item">
+                      <!-- courses.html is food.html -->
+                      <a class="nav-link" href="/food">Food</a>
+                    </li>
+                    <li class="nav-item">
+                      <!-- course-details.html is drinks.html -->
+                      <a class="nav-link" href="/drinks"
+                        >Drinks</a>
+                    </li>
+                  </ul>
+                </li>
+                <li class="nav-item submenu dropdown">
+                  <a
+                    href="#"
+                    class="nav-link dropdown-toggle"
+                    data-toggle="dropdown"
+                    role="button"
+                    aria-haspopup="true"
+                    aria-expanded="false"
+                    >Dabao</a
+                  >
+                  <ul class="dropdown-menu">
+                    <li class="nav-item">
+                      <!-- blog.html is help-me-dabao.html -->
+                      <a class="nav-link" href="/help_me_dabao">Help Me Dabao</a>
+                    </li>
+                    <li class="nav-item">
+                      <!-- single-blog.html is help-others-dabao.html -->
+                      <a class="nav-link" href="/help_others_dabao"
+                        >Help Others</a
+                      >
+                    </li>
+                  </ul>
+                </li>
+                <li class="nav-item">
+                  <!-- contact.html is login.html -->
+                  <a class="nav-link" href="/login">Log In</a>
+                </li>
+                <li class="nav-item">
+                  <a href="/search_form" class="nav-link search" id="search">
+                    <i class="ti-search"></i>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+      </div>
+    </header>
+
+    <section>
+      <div class="container">
+      <div class="row">
+        <table class="table table-bordered text-center">
+          <tr class="text-center">
+            <th>No.</th>
+            <th>Item</th>
+            <th>Price</th>
+          </tr>
+          {% for item in order.get_cart_items %}
+          
+            <tr>
+              <td>{{ forloop.counter }}</td>
+              <td>
+                {{ item.meal.name }}
+                <span class="pull-right">
+                  <a href="{% url 'shopping_cart:delete_item' item_id=item.id rest_id=rest_id%}" data-balloon="remove this item from cart" class="text-danger" onclick="return confirm_delete();">
+                    <i class="fas fa-trash"></i>
+                  </a>
+                </span>
+              </td>
+              <td>{{ item.meal.price }}</td>
+            </tr>
+          {% empty %}
+            <tr>
+              <td colspan= 3> You have not added any items yet.</td>
+            </tr>
+          {% endfor %}
+          <tr>
+            {% if order.get_cart_total != None %}
+            <td colspan=2>
+              <strong class="pull-right">Order Total:</strong>
+            </td>
+            
+            <td colspan= 1>
+              $<strong>{{ order.get_cart_total }}</strong>
+            </td>
+            {% endif %}
+          </tr>
+          <tr>
+            <td colspan=1 >
+              <a href="{% url 'theApp:meal_list' rest_id %}" class="btn btn-warning pull-left">
+                {% if order.get_cart_total != 0 %}Continue Shopping{% else %}Add Items to Cart {% endif %}
+              </a> 
+            </td>
+          </tr>
+          <tr>
+            {% if order.get_cart_total != None %}
+              <td colspan="5">
+              <a class='btn btn-warning float-right ml-2' href="{% url 'shopping_cart:checkout' order.id %}">Proceed to checkout</a>
+              <!-- <a class='btn btn-primary float-right' href='/'>Continue shopping</a> -->
+              </td>
+            {% endif %}
+          </tr>
+        </table>
         
-        <td colspan= 1>
-          $<strong>{{ order.get_cart_total }}</strong>
-        </td>
-        {% endif %}
-      </tr>
-      <tr>
-        <td colspan=1 >
-          <a href="{% url 'theApp:meal_list' rest_id %}" class="btn btn-warning pull-left">
-            {% if order.get_cart_total != 0 %}Continue Shopping{% else %}Add Items to Cart {% endif %}
-          </a> 
-        </td>
-      </tr>
-      <tr>
-        {% if order.get_cart_total != None %}
-          <td colspan="5">
-          <a class='btn btn-warning float-right ml-2' href="{% url 'shopping_cart:checkout' order.id %}">Proceed to checkout</a>
-          <!-- <a class='btn btn-primary float-right' href='/'>Continue shopping</a> -->
-          </td>
-        {% endif %}
-      </tr>
-    </table>
-     
-   </div>
- </section>
+      </div>
+      </div>
+    </section>
 
-{% endblock %}
+    {% endblock %}
 
-{% block scripts %}
-  {{ block.super }}
-  <script>
-  function confirm_delete(){
-    return confirm("Do you want to remove this item from cart?");
-  }
-  </script>
-{% endblock scripts %}
+    {% block scripts %}
+      {{ block.super }}
+      <script>
+      function confirm_delete(){
+        return confirm("Do you want to remove this item from cart?");
+      }
+      </script>
+    {% endblock scripts %}
+  </body>
+</html>
 

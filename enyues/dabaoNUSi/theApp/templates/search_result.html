@@ -137,11 +137,7 @@
           <div class="row justify-content-center">
             <div class="col-lg-6">
               <div class="banner_content text-center">
-                <h2>Food</h2>
-                <div class="page_link">
-                  <a href="/home">Home</a>
-                  <a href="#">Food and Beverages</a>
-                  <a href="/food">Food</a>
+                <h2>Results</h2>
                 </div>
               </div>
             </div>
@@ -150,43 +146,56 @@
       </div>
     </section>
     <!--================End Home Banner Area =================-->
-    {% if queryset %}
-      <!--
-      <div class="nav-item submenu dropdown active">
-        <a
-          href="#"
-          class="nav-link dropdown-toggle"
-          data-toggle="dropdown"
-          role="button"
-          aria-haspopup="true"
-          aria-expanded="false"
-        >Sort By</a>
-        <ul class="dropdown-menu">
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'theApp:search_result' %}?sort=average_price_desc">Price Descending</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'theApp:search_result' %}?sort=average_price_asc">Price Ascending</a>
-        </ul>
+    <section class="about_area section_gap">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-5 col-md-6 align-self-center">
+            {% if queryset %}
+              <!--
+              <div class="nav-item submenu dropdown active">
+                <a
+                  href="#"
+                  class="nav-link dropdown-toggle"
+                  data-toggle="dropdown"
+                  role="button"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                >Sort By</a>
+                <ul class="dropdown-menu">
+                  <li class="nav-item">
+                    <a class="nav-link" href="{% url 'theApp:search_result' %}?sort=average_price_desc">Price Descending</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="{% url 'theApp:search_result' %}?sort=average_price_asc">Price Ascending</a>
+                </ul>
+              </div>
+              -->
+              {{test}}
+              {{test1}}
+              {{test2}}
+              <div class="row">
+                <ul>
+                {% for restaurant in queryset %}
+                <h1>{{forloop.counter}}</h1>
+                <a href="{% url 'theApp:meal_list' rest_id=restaurant.id %}">
+                  <img class="img-fluid" src="{{restaurant.image.url}}" alt="" />
+                  <h3>{{ restaurant }}</h3>
+                  <h5>Average Price : {{ restaurant.get_avg_price }}</h5>
+                  <h5>Average Rating : {{ restaurant.get_avg_rating }}</h5>
+                </a>
+                  <hr />
+                {% endfor %}
+                </ul>
+              </div>
+            {% else %}
+              <div class="container">
+                <h3>There are no restaurants</h3>
+              </div>
+            {% endif %}
+          </div>
+        </div>
       </div>
-      -->
-      {{test}}
-      {{test1}}
-      {{test2}}
-      <div class="row">
-        <ul>
-        {% for restaurant in queryset %}
-        <a href="{% url 'theApp:meal_list' rest_id=restaurant.id %}">
-          <h4>{{ restaurant }}</h4>
-          <h5>Average Price : {{ restaurant.get_avg_price }}</h5>
-        </a>
-          <hr />
-        {% endfor %}
-        </ul>
-      </div>
-    {% else %}
-      <p>There are no restaurants</p>
-    {% endif %}
+    </section>
 
     <!--================ Start footer Area  =================-->
     <footer class="footer-area section_gap">
