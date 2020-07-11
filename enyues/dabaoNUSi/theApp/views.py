@@ -178,7 +178,8 @@ def help_me_dabao(request):
 def help_others_dabao(request):
     locations = Location.objects.all()
     destinations = Destination.objects.all()
-    return render(request, 'help-others-dabao.html', {'locations':locations, 'destinations':destinations})
+    orders = Order.objects.all()
+    return render(request, 'help-others-dabao.html', {'locations':locations, 'destinations':destinations, 'orders':orders})
 
 def help_others_dabao_result(request):
     qs = Order.objects.all()

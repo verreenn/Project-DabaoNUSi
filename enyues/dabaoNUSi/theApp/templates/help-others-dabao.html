@@ -176,6 +176,7 @@
       </form>
     </main>
 </body> -->
+{{order.destination}}
 <div class="job-search align-items-center justify-content-center">
   <div class="tab-content bg-white p-4 rounded" id="pills-tabContent">
     <div class="tab-pane fade show active" id="pills-job" role="tabpanel" aria-labelledby="pills-job-tab">
@@ -212,8 +213,8 @@
                         <label for='destination'></label>
                         <select id="destination" data-trigger="" name="destination">
                             <option selected>DESTINATION</option>
-                            {% for loc in locations %}
-                            <option value="{{ dest }}">{{ loc }}</option>
+                            {% for dest in destinations %}
+                            <option value="{{ dest }}">{{ dest }}</option>
                             {% endfor %}
                           </select>
                     </div>
