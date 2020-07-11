@@ -9,7 +9,7 @@
             content="width=device-width, initial-scale=1, shrink-to-fit=no"
         />
         <link rel="icon" href="{% static 'img/favicon.png' %}" type="image/png" />
-        <title>Project dabaoNUSi</title>
+        <title>Search</title>
         <!-- Bootstrap CSS -->
         <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}" />
         <link rel="stylesheet" href="{% static 'css/flaticon.css' %}" />
@@ -23,77 +23,96 @@
     <!--================ Start Header Menu Area =================-->
     <!--================ End Header Menu Area =================-->
   
-
-    <main role="main" class="container">
-
-      <h3>Filter Restaurants</h3>
-      <form method="POST" action="{% url 'theApp:search_result' %}">
-        {% csrf_token %}
-        <div class="form-row">
-            <div class="form-group col-12">
-                <div class="input-group">
-                    <input class="form-control py-2 border-right-0 border" type="search" name="location" placeholder="Location" />
-                    <span class="input-group-append">
-                        <div class="input-group-text bg-transparent">
-                            <i class="fa fa-search"></i>
+    <div class="popular_courses">
+        <div class="row justify-content-center">
+        <div class="col-lg-6">
+            <div class="register_form">
+                <div class="row justify-content-center">
+                    <div class="col-lg-8">
+                        <h2 class="mb-3"></h2>
+                        <div class="main_title">
+                            <h2 class="mb-3">Filter Restaurants Here</h2>
                         </div>
-                    </span>
+                    </div>
                 </div>
-            </div>        
-        </div>
-        <div class="form-row">
-            <div class="form-group col-12">
-                <div class="input-group">
-                    <input class="form-control py-2 border-right-0 border" type="search" name="name" placeholder="Restaurant Name" />
-                    <span class="input-group-append">
-                        <div class="input-group-text bg-transparent">
-                            <i class="fa fa-search"></i>
+                <form method="POST" action="{% url 'theApp:search_result' %}">
+                    {% csrf_token %}
+                    <div class="form-row">
+                        <div class="form-group col-12">
+                            <div class="input-group">
+                                <input class="form-control py-2 border-right-0 border" type="search" name="location" placeholder="Location" />
+                                <span class="input-group-append">
+                                    <div class="input-group-text bg-transparent">
+                                        <i class="fa fa-search"></i>
+                                    </div>
+                                </span>
+                            </div>
+                        </div>        
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-12">
+                            <div class="input-group">
+                                <input class="form-control py-2 border-right-0 border" type="search" name="name" placeholder="Restaurant Name" />
+                                <span class="input-group-append">
+                                    <div class="input-group-text bg-transparent">
+                                        <i class="fa fa-search"></i>
+                                    </div>
+                                </span>
+                            </div>
+                        </div>        
+                    </div>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg-7">
+                                <div class="row justify-content-center">
+                                    <div class="form-group col-lg-8 justify-content-center">
+                                        <div class="form-group col-lg-8">
+                                            <label for='category'>Food Category</label>
+                                            <select id="category" class="form-control justify-content-center" name="category">
+                                                <option selected>Choose...</option>
+                                                {% for cat in categories %}
+                                                <option value="{{ cat }}">{{ cat }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                    </div>        
+                                </div>
+                                <p></p>
+                                <div class="row justify-content-center">
+                                    <div class="form-group col-lg-8 justify-content-center">
+                                        <div class="form-group col-lg-8">
+                                            <label for='prices'>Average Prices</label>
+                                            <select id="prices" class="form-control" name="prices">
+                                                <option selected>Choose...</option>
+                                                {% for price in prices %}
+                                                <option value="{{ price }}">{{ price }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                    </div>        
+                                </div>
+                            </div>
+                        <div class="row">
+                            <div class="form-row">
+                                <div class="form-group col-12">
+                                    <div class="form-group col-md-8">
+                                        <label for='sort'>Sort By</label>
+                                        <select id="sort" class="form-control" name="sort">
+                                            <option selected>Choose...</option>
+                                            <option value="average_price_desc">Price Descending</option>
+                                            <option value="average_price_asc">Price Ascending</option>
+                                        </select>
+                                    </div>
+                                </div>        
+                            </div>
                         </div>
-                    </span>
-                </div>
-            </div>        
+                    </div>
+                    <button type="submit" class="btn btn-primary">Search</button>
+                </form>
+            </div>
         </div>
-        <div class="form-row">
-            <div class="form-group col-12">
-                <div class="form-group col-md-4">
-                    <label for='category'>Food Category</label>
-                    <select id="category" class="form-control" name="category">
-                        <option selected>Choose...</option>
-                        {% for cat in categories %}
-                        <option value="{{ cat }}">{{ cat }}</option>
-                        {% endfor %}
-                      </select>
-                </div>
-            </div>        
         </div>
-        <div class="form-row">
-            <div class="form-group col-12">
-                <div class="form-group col-md-4">
-                    <label for='prices'>Average Prices</label>
-                    <select id="prices" class="form-control" name="prices">
-                        <option selected>Choose...</option>
-                        {% for price in prices %}
-                        <option value="{{ price }}">{{ price }}</option>
-                        {% endfor %}
-                      </select>
-                </div>
-            </div>        
-        </div>
-        <div class="form-row">
-            <div class="form-group col-12">
-                <div class="form-group col-md-4">
-                    <label for='sort'>Sort By</label>
-                    <select id="sort" class="form-control" name="sort">
-                        <option selected>Choose...</option>
-                        <option value="average_price_desc">Price Descending</option>
-                        <option value="average_price_asc">Price Ascending</option>
-                      </select>
-                </div>
-            </div>        
-        </div>
-        <button type="submit" class="btn btn-primary">Search</button>
-      </form>
+    </div>
     </main>
 </body>
-
 </html>
