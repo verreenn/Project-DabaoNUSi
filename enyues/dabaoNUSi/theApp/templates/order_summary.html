@@ -173,7 +173,7 @@
          {% endfor %}
          <tr>
            {% if order.get_cart_total != None %}
-           <td colspan=2>
+           <td colspan=3>
              <strong class="pull-right">Order Total:</strong>
            </td>
            
@@ -182,24 +182,35 @@
            </td>
            {% endif %}
          </tr>
-         <tr>
-           <td colspan=1 >
-             <a href="{% url 'theApp:meal_list' rest_id %}" class="btn btn-warning pull-left">
-               {% if order.get_cart_total != 0 %}Continue Shopping{% else %}Add Items to Cart {% endif %}
-             </a> 
-           </td>
-         </tr>
-         <tr>
+      </table>
+      <div class="container" >
+        <h1></h1>
+        <div class="row align-items-center">
+          <div class="col-lg-12 justify-content-center">
+            {% if order.get_cart_total != None %}
+            <td colspan=2>
+            <a class='btn btn-warning float-right ml-2' href="{% url 'shopping_cart:checkout' order_id=order.id rest_id=rest_id %}">Proceed to Checkout</a>
+            </td>
+            {% endif %}
+
+            <a href="{% url 'theApp:meal_list' rest_id %}" class="btn btn-warning float-right ml-2">
+              {% if order.get_cart_total != 0 %} Continue Shopping {% else %}Add Items to Cart {% endif %}
+            </a>
+          </div>
+        </div>
+        <p></p>
+        <h1></h1>
+        <!--<div class="row align-items-center">
+          <div class="col-lg-12 justify-content-center">
            {% if order.get_cart_total != None %}
-             <td colspan="5">
-             <a class='btn btn-warning float-right ml-2' href="{% url 'shopping_cart:checkout' order_id=order.id rest_id=rest_id %}">Proceed to checkout</a>
-             <!-- <a class='btn btn-primary float-right' href='/'>Continue shopping</a> -->
+             <td colspan=2>
+             <a class='btn btn-warning float-right ml-2' href="{% url 'shopping_cart:checkout' order_id=order.id rest_id=rest_id %}">Proceed to Checkout</a>
              </td>
-           {% endif %}
-         </tr>
-       </table>
-        
+             {% endif %}
+          </div>
+        </div> -->
       </div>
+    </div>
     </section>
     {% endblock %}
 
