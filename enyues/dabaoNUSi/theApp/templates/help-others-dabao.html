@@ -176,7 +176,7 @@
       </form>
     </main>
 </body> -->
-{{order.destination}}
+
 <div class="job-search align-items-center justify-content-center">
   <div class="tab-content bg-white p-4 rounded" id="pills-tabContent">
     <div class="tab-pane fade show active" id="pills-job" role="tabpanel" aria-labelledby="pills-job-tab">
@@ -231,22 +231,23 @@
 
     <div class="site-section bg-light section_gap">
       <div class="container">
+        {% for ord in orders %}
         <div class="row" data-aos="fade">
           <div class="col-md-12">
  
             <div class="job-post-item bg-white p-4 d-block d-md-flex align-items-center">
                <div class="mb-4 mb-md-0 mr-5">
                 <div class="job-post-item-header d-flex align-items-center">
-                  <h2 class="mr-3 text-black h4">Starbucks at UTown</h2>
+                  <h2 class="mr-3 text-black h4">{{ord.restaurant}}</h2>
                   <div class="badge-wrap">
                    <span class="bg-warning text-white badge py-2 px-4"> 
-                    <span class="ti-time mr-2"></span> 12:00 PM - 13:30 PM
+                    <span class="ti-time mr-2"></span> {{ord.time}}
                   </span>
                   </div>
                 </div>
                 <div class="job-post-item-body d-block d-md-flex">
-                  <div class="mr-3"><span class="fl-bigmug-line-portfolio23"></span> <a href="#">Geoffrey Lee</a></div>
-                  <div><span class="fl-bigmug-line-big104"></span> <span><span class="ti-location-pin mr-2"></span> Eusoff Hall</span></div>
+                  <div class="mr-3"><span class="fl-bigmug-line-portfolio23"></span> <a href="#">{{ord.owner}}</a></div>
+                  <div><span class="fl-bigmug-line-big104"></span> <span><span class="ti-location-pin mr-2"></span> {{ord.destination}}</span></div>
                 </div>
                </div>
  
@@ -257,6 +258,7 @@
  
           </div>
         </div>
+        {% endfor %}
 
         <div class="row" data-aos="fade">
           <div class="col-md-12">

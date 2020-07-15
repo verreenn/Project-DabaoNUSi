@@ -190,7 +190,7 @@
            </td>
          </tr>
          <tr>
-           {% if order.get_cart_total != None %}
+           {% if order.get_cart_total != 0 %}
              <td colspan="5">
              <a class='btn btn-warning float-right ml-2' href="{% url 'shopping_cart:checkout' order_id=order.id rest_id=rest_id %}">Proceed to checkout</a>
              <!-- <a class='btn btn-primary float-right' href='/'>Continue shopping</a> -->

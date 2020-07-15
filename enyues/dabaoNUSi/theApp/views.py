@@ -23,16 +23,16 @@ def arise(request):
     return meal_list(request, 1)
 
 def atempo(request):
-    return render(request, 'atempo.html')
+    return meal_list(request, 2)
 
 def barbar(request):
-    return render(request, 'barbar.html')
+    return meal_list(request, 3)
 
 def crave(request):
-    return render(request, 'crave.html')
+    return meal_list(request, 19)
 
 def hwangs(request):
-    return render(request, 'hwangs.html')
+    return meal_list(request, 4)
 
 def sinkee(request):
     return render(request, 'sinkee.html')
@@ -41,49 +41,49 @@ def yongtaufoo(request):
     return render(request, 'yongtaufoo.html')
 
 def cool_spot(request):
-    return render(request, 'cool_spot.html')
+    return meal_list(request, 10)
 
 def spinelli(request):
-    return render(request, 'spinelli.html')
+    return meal_list(request, 12)
 
 def maxx_coffee(request):
-    return render(request, 'maxx_coffee.html')
+    return meal_list(request, 13)
 
 def liho(request):
-    return render(request, 'liho.html')
+    return meal_list(request, 20)
 
 def gongcha(request):
-    return render(request, 'gongcha.html')
+    return meal_list(request, 11)
 
 def fass_mala(request):
-    return render(request, 'fass_mala.html')
+    return meal_list(request, 9)
 
 def teaparty(request):
-    return render(request, 'teaparty.html')
+    return meal_list(request, 7)
 
 def subway(request):
-    return render(request, 'subway.html')
+    return meal_list(request, 5)
 
 def ichiban(request):
-    return render(request, 'ichiban.html')
+    return meal_list(request, 6)
 
 def pasta_express(request):
-    return render(request, 'pasta_express.html')
+    return meal_list(request, 8)
 
 def deck_juice(request):
-    return render(request, 'deck_juice.html')
+    return meal_list(request, 15)
 
 def liji(request):
-    return render(request, 'liji.html')
+    return meal_list(request, 18)
 
 def the_coffee_roaster(request):
-    return render(request, 'the_coffee_roaster.html')
+    return meal_list(request, 16)
 
 def jewel_coffee(request):
-    return render(request, 'jewel_coffee.html')
+    return meal_list(request, 14)
 
 def starbucks(request):
-    return render(request, 'starbucks.html')
+    return meal_list(request, 17)
     
 def food2(request):
     return render(request, 'food2.html')
@@ -99,7 +99,6 @@ def search_result(request):
     #sort_query = request.GET.get('sort', 'id')
     sort_query = request.POST.get('sort')
     rating_query = request.POST.get('rating')
-    price_query = request.POST.get('price')
     prices_query = request.POST.get('prices')
 
     if location_query != '' and location_query is not None:
@@ -178,7 +177,7 @@ def help_me_dabao(request):
 def help_others_dabao(request):
     locations = Location.objects.all()
     destinations = Destination.objects.all()
-    orders = Order.objects.all()
+    orders = Order.objects.filter(is_ordered=True)
     return render(request, 'help-others-dabao.html', {'locations':locations, 'destinations':destinations, 'orders':orders})
 
 def help_others_dabao_result(request):
@@ -352,3 +351,62 @@ def add_rating(request, rest_id):
             rate.user = user_profile
             rate.save()
     return redirect('theApp:meal_list', rest_id=rest_id)
+
+def help_me_dabao_search(request):
+    keyword_query = request.POST.get('keyword')
+    prices_query = request.POST.get('price')
+    location_query = request.POST.get('location')
+    rating_query = request.POST.get('reviews')
+    dietarys_query = request.POST.get('dietarys')
+    others_query = request.POST.get('others')
+    qs = Restaurant.objects.all()
+
+    if location_query != '' and location_query is not None and location_query != "LOCATION":
+        qs = qs.filter(location__name__icontains=location_query)
+
+    if dietarys_query != '' and dietarys_query is not None and dietarys_query != "DIETARY NEEDS":
+        qs = qs.filter(categories__name=dietarys_query)
+
+    if others_query != '' and others_query is not None and others_query != "OTHERS":
+        qs = qs.filter(categories__name=others_query)
+
+    if keyword_query != '' and keyword_query is not None:
+        qs = qs.filter(name__icontains=keyword_query)
+
+    if rating_query != '' and rating_query is not None and rating_query != 'REVIEW':
+        if rating_query == "More Than 1 Star":
+            rest_ids = [rest.id for rest in Restaurant.objects.all() if rest.get_avg_rating() >= 1]
+            qs = qs.filter(id__in=rest_ids)
+        elif rating_query == "More Than 2 Stars":
+            rest_ids = [rest.id for rest in Restaurant.objects.all() if rest.get_avg_rating() >= 2]
+            qs = qs.filter(id__in=rest_ids)
+        elif rating_query == "More Than 3 Stars":
+            rest_ids = [rest.id for rest in Restaurant.objects.all() if rest.get_avg_rating() >= 3]
+            qs = qs.filter(id__in=rest_ids)
+        elif rating_query == "More Than 4 Stars":
+            rest_ids = [rest.id for rest in Restaurant.objects.all() if rest.get_avg_rating() >= 4]
+            qs = qs.filter(id__in=rest_ids)
+        elif rating_query == "5 Stars":
+            rest_ids = [rest.id for rest in Restaurant.objects.all() if rest.get_avg_rating() == 5]
+            qs = qs.filter(id__in=rest_ids)
+    
+    if prices_query != '' and prices_query is not None and prices_query != 'PRICE':
+        if prices_query == "Less Than $5":
+            rest_ids = [rest.id for rest in Restaurant.objects.all() if rest.get_avg_price() <= 5]
+            qs = qs.filter(id__in=rest_ids)
+        elif prices_query == "Less Than $10":
+            rest_ids = [rest.id for rest in Restaurant.objects.all() if rest.get_avg_price() <= 10]
+            qs = qs.filter(id__in=rest_ids)
+        elif prices_query == "Less Than $20":
+            rest_ids = [rest.id for rest in Restaurant.objects.all() if rest.get_avg_price() <= 20]
+            qs = qs.filter(id__in=rest_ids)
+
+
+    context = {'price':prices_query,
+    'loc':location_query,
+    'rev':rating_query,
+    'diet':dietarys_query,
+    'ot':others_query,
+    'queryset':qs}
+
+    return render(request, "help_me_dabao_result.html", context)

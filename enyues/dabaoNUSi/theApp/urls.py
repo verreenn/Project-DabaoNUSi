@@ -25,7 +25,7 @@ urlpatterns = [
     path('search_form/', views.search_form, name='search'),
     path('food/', views.food, name='food'),
     path('drinks/', views.drinks, name='drinks'),
-    path('help_me_dabao/', views.help_me_dabao, name='help me dabao'),
+    path('help_me_dabao/', views.help_me_dabao, name='help_me_dabao'),
     path('help_others_dabao/', views.help_others_dabao, name='help others tabao'),
     path('login/', views.login, name='login'),
     path('login_test/', views.login_test, name='login_test'),
@@ -84,4 +84,5 @@ urlpatterns = [
     url(r'^order/(?P<order_id>\d+)/$', views.order_detail, name='order_detail'),
     url(r'^restaurant/(?P<rest_id>\d+)/add_comment/$', views.add_comment, name='add_comment'),
     url(r'^restaurant/(?P<rest_id>\d+)/add_rating/$', views.add_rating, name='add_rating'),
+    path('help-me-dabao/search/search/', views.help_me_dabao_search, name='help_me_dabao_search')
 ]

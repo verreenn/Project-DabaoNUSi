@@ -151,25 +151,6 @@
         <div class="row">
           <div class="col-lg-5 col-md-6 align-self-center">
             {% if queryset %}
-              <!--
-              <div class="nav-item submenu dropdown active">
-                <a
-                  href="#"
-                  class="nav-link dropdown-toggle"
-                  data-toggle="dropdown"
-                  role="button"
-                  aria-haspopup="true"
-                  aria-expanded="false"
-                >Sort By</a>
-                <ul class="dropdown-menu">
-                  <li class="nav-item">
-                    <a class="nav-link" href="{% url 'theApp:search_result' %}?sort=average_price_desc">Price Descending</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="{% url 'theApp:search_result' %}?sort=average_price_asc">Price Ascending</a>
-                </ul>
-              </div>
-              -->
               <div class="row">
                 <ul>
                 {% for restaurant in queryset %}
@@ -189,6 +170,9 @@
                 <h3>There are no restaurants</h3>
               </div>
             {% endif %}
+            <div class="row">
+                <h4>Not What You Are Looking For?</h4> <a href="{% url 'theApp:help_me_dabao' %}">Go Back</a>
+            </div>
           </div>
         </div>
       </div>

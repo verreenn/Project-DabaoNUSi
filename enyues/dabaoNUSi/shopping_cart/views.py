@@ -28,10 +28,11 @@ def add_to_cart(request, item_id):
     user_profile = Profile.objects.get(id=request.user.id)
     # filter products by id
     product = Meal.objects.filter(id=item_id).first()
+    rest_id = product.restaurant.id
     # create orderItem of the selected product
     order_item, status = OrderItem.objects.get_or_create(meal=product)
     # create order associated with the user
-    user_order, status = Order.objects.get_or_create(owner=user_profile, is_ordered=False)
+    user_order, status = Order.objects.get_or_create(owner=user_profile, is_ordered=False, restaurant_id=rest_id)
     user_order.items.add(order_item)
     if status:
         # generate a reference code
@@ -40,7 +41,6 @@ def add_to_cart(request, item_id):
 
     # show confirmation message and redirect back to the same page
     messages.info(request, "item added to cart")
-    rest_id = product.restaurant.id
     return redirect(reverse('theApp:meal_list', args=[rest_id]))
 
 @login_required()
@@ -87,6 +87,7 @@ def checkout(request, order_id, rest_id):
 def add_details(request, order_id):
     destinations = Destination.objects.all()
     locations = Location.objects.all()
+    orders = Order.objects.filter(is_ordered=True)
     number_query = request.POST.get('number')
     details_query = request.POST.get('details')
     destination_query = request.POST.get('destination')
@@ -97,7 +98,7 @@ def add_details(request, order_id):
     order.is_ordered = True
     order.save()
     context = {
-        'order': order,
+        'orders': orders,
         'locations':locations,
         'destinations':destinations
     }
