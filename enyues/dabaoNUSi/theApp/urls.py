@@ -82,6 +82,7 @@ urlpatterns = [
     path('Frontier_drink/', views.frontier_drink, name='Frontier Drink'),
     url(r'^restaurant/(?P<rest_id>\d+)/$', views.meal_list, name='meal_list'),
     url(r'^order/(?P<order_id>\d+)/$', views.order_detail, name='order_detail'),
+    url(r'^confirmation/(?P<order_id>\d+)/$', views.confirmation, name='confirmation'),
     url(r'^restaurant/(?P<rest_id>\d+)/add_comment/$', views.add_comment, name='add_comment'),
     url(r'^restaurant/(?P<rest_id>\d+)/add_rating/$', views.add_rating, name='add_rating'),
     path('help-me-dabao/search/search/', views.help_me_dabao_search, name='help_me_dabao_search')

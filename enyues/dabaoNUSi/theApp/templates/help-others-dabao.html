@@ -27,20 +27,6 @@
       <div class="main_menu">
         <div class="search_input" id="search_input_box">
           <div class="container">
-            <form class="d-flex justify-content-between" method="" action="">
-              <input
-                type="text"
-                class="form-control"
-                id="search_input"
-                placeholder="Search Here"
-              />
-              <button type="submit" class="btn"></button>
-              <span
-                class="ti-close"
-                id="close_search"
-                title="Close Search"
-              ></span>
-            </form>
           </div>
         </div>
 
@@ -152,82 +138,59 @@
         </div>
       </div>
     </section>
-    <!--================End Home Banner Area =================-->
 
-    <!-- <main role="main" class="container">
+    <div class="job-search align-items-center justify-content-center">
+      <div class="tab-content bg-white p-4 rounded" id="pills-tabContent">
+        <div class="tab-pane fade show active" id="pills-job" role="tabpanel" aria-labelledby="pills-job-tab">
+          <p>
 
-      <h3>Filter Restaurants</h3>
-      <form method="POST" action="{% url 'theApp:help_others_dabao_result' %}">
-        {% csrf_token %}
-        <div class="form-row">
-            <div class="form-group col-12">
-                <div class="form-group col-md-4">
-                    <label for='location'></label>
-                    <select id="location" class="form-control" name="location">
-                        <option selected>Location</option>
-                        {% for loc in locations %}
-                        <option value="{{ loc }}">{{ loc }}</option>
-                        {% endfor %}
-                      </select>
+          </p>
+          <h1 class="mb-3 text-center">Search Dabao Requests</h1>
+          <form action="#" method="post">
+            <div class="row justify-content-center">
+              <div class="col-md-6 col-lg-3 mb-3 mb-lg-0">
+                <input type="text" class="form-control" placeholder="eg. GongCha">
+              </div>
+              <form method="POST" action="{% url 'theApp:help_others_dabao_result' %}">
+                {% csrf_token %}
+                <div class="input-field">
+                    <div class="input-select">
+                        <div class="input-select">
+                            <label for='location'></label>
+                            <select id="location" data-trigger="" name="location">
+                                <option selected>STALL LOCATION</option>
+                                {% for loc in locations %}
+                                <option value="{{ loc }}">{{ loc }}</option>
+                                {% endfor %}
+                              </select>
+                        </div>
+                    </div>        
                 </div>
-            </div>        
-        </div>
-        <button type="submit" class="btn btn-primary">Search</button>
-      </form>
-    </main>
-</body> -->
-
-<div class="job-search align-items-center justify-content-center">
-  <div class="tab-content bg-white p-4 rounded" id="pills-tabContent">
-    <div class="tab-pane fade show active" id="pills-job" role="tabpanel" aria-labelledby="pills-job-tab">
-      <p>
-
-      </p>
-      <h1 class="mb-3 text-center">Search Dabao Requests</h1>
-      <form action="#" method="post">
-        <div class="row justify-content-center">
-          <div class="col-md-6 col-lg-3 mb-3 mb-lg-0">
-            <input type="text" class="form-control" placeholder="eg. GongCha">
-          </div>
-          <form method="POST" action="{% url 'theApp:help_others_dabao_result' %}">
-            {% csrf_token %}
-            <div class="input-field">
-                <div class="input-select">
+              </form>
+              <form method="POST" action="{% url 'theApp:help_others_dabao_result' %}">
+                {% csrf_token %}
+                <div class="input-field">
                     <div class="input-select">
-                        <label for='location'></label>
-                        <select id="location" data-trigger="" name="location">
-                            <option selected>STALL LOCATION</option>
-                            {% for loc in locations %}
-                            <option value="{{ loc }}">{{ loc }}</option>
-                            {% endfor %}
-                          </select>
-                    </div>
-                </div>        
+                        <div class="input-select">
+                            <label for='destination'></label>
+                            <select id="destination" data-trigger="" name="destination">
+                                <option selected>DESTINATION</option>
+                                {% for dest in destinations %}
+                                <option value="{{ dest }}">{{ dest }}</option>
+                                {% endfor %}
+                              </select>
+                        </div>
+                    </div>        
+                </div>
+              </form>
+              <div class="col-md-6 col-lg-3 mb-3 mb-lg-0">
+                <input type="submit" class="btn btn-primary btn-block" value="Search">
+              </div>
             </div>
           </form>
-          <form method="POST" action="{% url 'theApp:help_others_dabao_result' %}">
-            {% csrf_token %}
-            <div class="input-field">
-                <div class="input-select">
-                    <div class="input-select">
-                        <label for='destination'></label>
-                        <select id="destination" data-trigger="" name="destination">
-                            <option selected>DESTINATION</option>
-                            {% for dest in destinations %}
-                            <option value="{{ dest }}">{{ dest }}</option>
-                            {% endfor %}
-                          </select>
-                    </div>
-                </div>        
-            </div>
-          </form>
-          <div class="col-md-6 col-lg-3 mb-3 mb-lg-0">
-            <input type="submit" class="btn btn-primary btn-block" value="Search">
-          </div>
         </div>
-      </form>
+      </div>
     </div>
-  </div>
 
     <div class="site-section bg-light section_gap">
       <div class="container">
@@ -252,13 +215,30 @@
                </div>
  
                <div class="ml-auto">
-                 <a href="#" class="btn btn-primary py-2">Help Dabao</a>
+                 <a href="#" class="btn btn-primary py-2" data-target="#helpDabaoModal" data-toggle="modal">Help Dabao</a>
                </div>
             </div>
- 
+            <div class="modal" tabindex="-1" id="helpDabaoModal" role="dialog" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered">
+                  <div class="modal-content">
+                      <div class="modal-header">
+                          <h5 class="modal-title">Confirmation</h5>
+                          <button type="button" class="close" data-dismiss="modal">&times;</button>                
+                      </div>
+                      <div class="modal-body">
+                          <p>Are you sure you want to help?</p>
+                          <p class="text-secondary"><small>Upon proceeding, this request will be removed from the system. </small></p>
+                      </div>
+                      <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                          <a class="btn btn-primary" href="{% url 'theApp:confirmation' ord.id %}">Proceed</a>
+                      </div>
+                  </div>
+              </div>
+            </div>
+            {% endfor %}
           </div>
         </div>
-        {% endfor %}
 
         <div class="row" data-aos="fade">
           <div class="col-md-12">
@@ -619,118 +599,25 @@
                   </a>
               </li>
           </ul>
-      </nav>
-      <p>
-  
-      </p>
+        </nav>
       </div>
-  </body>
-    <!--================ Start footer Area  =================-->
-    <footer class="footer-area section_gap">
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-2 col-md-6 single-footer-widget">
-            <h4>DabaoNUSi</h4>
-            <ul>
-              <li><a href="#">About Us</a></li>
-              <li><a href="#">Video Tutorial</a></li>
-              <li><a href="#">FAQ</a></li>
-              <li><a href="#">Developers</a></li>
-            </ul>
-          </div>
-          <div class="col-lg-2 col-md-6 single-footer-widget">
-            <h4>Quick Links</h4>
-            <ul>
-              <li><a href="#">Food</a></li>
-              <li><a href="#">Drinks</a></li>
-              <li><a href="#">Help Me Dabao</a></li>
-              <li><a href="#">Help Others Dabao</a></li>
-            </ul>
-          </div>
-          <div class="col-lg-2 col-md-6 single-footer-widget">
-            <h4>Contact</h4>
-            <ul>
-              <li><a href="#">Promotion</a></li>
-              <li><a href="#">Partnerships</a></li>
-              <li><a href="#">Careers</a></li>
-              <li><a href="#">Others</a></li>
-            </ul>
-          </div>
-          <div class="col-lg-2 col-md-6 single-footer-widget">
-            <h4>Resources</h4>
-            <ul>
-              <li><a href="#">Guides</a></li>
-              <li><a href="#">Research</a></li>
-              <li><a href="#">Experts</a></li>
-              <li><a href="#">Agencies</a></li>
-            </ul>
-          </div>
-          <div class="col-lg-4 col-md-6 single-footer-widget">
-            <h4>Newsletter</h4>
-            <p>You can trust us. We only send promo offers,</p>
-            <div class="form-wrap" id="mc_embed_signup">
-              <form
-                target="_blank"
-                action="https://spondonit.us12.list-manage.com/subscribe/post?u=1462626880ade1ac87bd9c93a&amp;id=92a4423d01"
-                method="get"
-                class="form-inline"
-              >
-                <input
-                  class="form-control"
-                  name="EMAIL"
-                  placeholder="Your Email Address"
-                  onfocus="this.placeholder = ''"
-                  onblur="this.placeholder = 'Your Email Address'"
-                  required=""
-                  type="email"
-                />
-                <button class="click-btn btn btn-default">
-                  <span>subscribe</span>
-                </button>
-                <div style="position: absolute; left: -5000px;">
-                  <input
-                    name="b_36c4fd991d266f23781ded980_aefe40901a"
-                    tabindex="-1"
-                    value=""
-                    type="text"
-                  />
-                </div>
-
-                <div class="info"></div>
-              </form>
-            </div>
-          </div>
-        </div>
-        <div class="row footer-bottom d-flex justify-content-between">
-          <p class="col-lg-8 col-sm-12 footer-text m-0 text-white">
-            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="ti-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-          </p>
-          <div class="col-lg-4 col-sm-12 footer-social">
-            <a href="#"><i class="ti-facebook"></i></a>
-            <a href="#"><i class="ti-twitter"></i></a>
-            <a href="#"><i class="ti-dribbble"></i></a>
-            <a href="#"><i class="ti-linkedin"></i></a>
-          </div>
-        </div>
-      </div>
-    </footer>
-          <!--================ End footer Area  =================-->
+    </div>
+    
+  <!--================ End footer Area  =================-->
       
-          <!-- Optional JavaScript -->
-          <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-          <script src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
-          <script src="{% static 'js/popper.js' %}"></script>
-          <script src="{% static 'js/bootstrap.min.js' %}"></script>
-          <script src="{% static 'vendors/nice-select/js/jquery.nice-select.min.js' %}"></script>
-          <script src="{% static 'vendors/owl-carousel/owl.carousel.min.js' %}"></script>
-          <script src="{% static 'js/owl-carousel-thumb.min.js' %}"></script>
-          <script src="{% static 'js/jquery.ajaxchimp.min.js' %}"></script>
-          <script src="{% static 'js/mail-script.js' %}"></script>
-          <!--gmaps Js-->
-          <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCjCGmQ0Uq4exrzdcL6rvxywDDOvfAu6eE"></script>
-          <script src="{% static 'js/gmaps.min.js' %}"></script>
-          <script src="{% static 'js/theme.js' %}"></script>
-        </body>
-      </html>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
+    <script src="{% static 'js/popper.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'vendors/nice-select/js/jquery.nice-select.min.js' %}"></script>
+    <script src="{% static 'vendors/owl-carousel/owl.carousel.min.js' %}"></script>
+    <script src="{% static 'js/owl-carousel-thumb.min.js' %}"></script>
+    <script src="{% static 'js/jquery.ajaxchimp.min.js' %}"></script>
+    <script src="{% static 'js/mail-script.js' %}"></script>
+    <!--gmaps Js-->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCjCGmQ0Uq4exrzdcL6rvxywDDOvfAu6eE"></script>
+    <script src="{% static 'js/gmaps.min.js' %}"></script>
+    <script src="{% static 'js/theme.js' %}"></script>
+  </body>
+</html>

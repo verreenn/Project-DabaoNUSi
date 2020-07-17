@@ -126,7 +126,7 @@
                   <a class="nav-link" href="/accounts/login">Log In</a>
                 </li>
                 <li class="nav-item">
-                  <a href="#" class="nav-link search" data-target="#filterModal" data-toggle="modal">
+                  <a href="/search_form" class="nav-link search" id="search">
                     <i class="ti-search"></i>
                   </a>
                   <!--<button class="btn btn-primary btn-sm pull-right" data-target="#filterModal" data-toggle="modal">Search</button> -->
@@ -211,72 +211,46 @@
     <div class="events_area">
       <div class="container">
         <div class="row justify-content-center">
-          <div class="col-lg-5">
-            <div class="main_title">
-              <h2 class="mb-3 text-white">Let's Start Helping!</h2>
-              <p>
-                Simply click on your friend's request to help
-              </p>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-lg-6 col-md-6">
-            <div class="single_event position-relative">
-              <div class="event_thumb">
-                <img src="{% static 'img/event/imh.png' %}" alt="" />
-              </div>
-              <div class="event_details">
-                <div class="d-flex mb-4">
-                  <div class="date"><span>15</span> Jun</div>
-
-                  <div class="time-location">
-                    <p>
-                      <span class="ti-time mr-2"></span> 12:00 PM - 13:30 PM
-                    </p>
-                    <p>
-                      <span class="ti-location-pin mr-2"></span> Eusoff Hall
-                    </p>
-                  </div>
-                </div>
-                <p>
-                  "Pls help me dabao something from The Deck at FASS!"
-                </p>
-                <a href="#" class="primary-btn rounded-0 mt-3">Help Dabao</a>
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-6 col-md-6">
-            <div class="single_event position-relative">
-              <div class="event_thumb">
-                <img src="{% static 'img/event/imh.png' %}" alt="" />
-              </div>
-              <div class="event_details">
-                <div class="d-flex mb-4">
-                  <div class="date"><span>15</span> Jun</div>
-
-                  <div class="time-location">
-                    <p>
-                      <span class="ti-time mr-2"></span> 12:00 PM - 13:00 PM
-                    </p>
-                    <p>
-                      <span class="ti-location-pin mr-2"></span> RVRC
-                    </p>
-                  </div>
-                </div>
-                <p>
-                  "Pls help me dabao something from The Frontier at Science!"
-                </p>
-                <a href="#" class="primary-btn rounded-0 mt-3">Help Dabao</a>
-              </div>
-            </div>
-          </div>
-
           <div class="col-lg-12">
-            <div class="text-center pt-lg-5 pt-3">
-              <a href="/help_others_dabao" class="event-link">
-                View All Requests <img src="{% static 'img/next.png' %}" alt="" />
-              </a>
+            <div class="row justify-content-center">
+              <div class="col-lg-6">
+                <div class="main_title">
+                  <h2 class="mb-3 text-white">Let's start</h2>
+                  <h2 class="mb-3 text-white">browsing food!</h2>
+                  <p></p>
+                  <p>
+                    I'm sure you are very hungry!
+                  </p>
+                </div>
+                <div class="row">
+                  <div class="col-lg-12">
+                    <div class="text-center pt-lg-5 pt-3">
+                      <a href="/help_me_dabao" class="event-link">
+                        Let's Look For Food <img src="{% static 'img/next.png' %}" alt="" />
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-6">
+                <div class="main_title">
+                  <h2 class="mb-3 text-white">Want to Help</h2>
+                  <h2 class="mb-3 text-white">Others Instead?</h2>
+                  <p></p>
+                  <p>
+                    That's so nice of you!
+                  </p>
+                </div>
+                <div class="row">
+                  <div class="col-lg-12">
+                    <div class="text-center pt-lg-5 pt-3">
+                      <a href="/help_others_dabao" class="event-link">
+                        Go Help Others <img src="{% static 'img/next.png' %}" alt="" />
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
