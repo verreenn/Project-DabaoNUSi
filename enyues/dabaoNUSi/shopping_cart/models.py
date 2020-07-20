@@ -55,3 +55,9 @@ class Order(models.Model):
 
     def __str__(self):
         return '{0} - {1}'.format(self.owner, self.ref_code)
+
+    def get_handphone_number(self):
+        return self.number
+    
+    def get_notes(self):
+        return self.details

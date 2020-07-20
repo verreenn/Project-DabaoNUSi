@@ -3,6 +3,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from .models import Restaurant, Meal, Category, Location, Reviews, Price, Dietary, Other, Destination, Comment
 from accounts.models import Profile
 from shopping_cart.models import Order
+from django.urls import reverse
 from .forms import CommentForm, RateForm
 #rom shopping_cart.models import Order
 from django.contrib.auth.decorators import login_required
@@ -17,20 +18,24 @@ def about(request):
 
 def home(request):
     restaurants = Restaurant.objects.all()
-    return render(request, 'index.html',{'restaurants' : restaurants})
+    orders = Order.objects.all()
+    return render(request, 'index.html',{'restaurants' : restaurants, 'orders': orders})
 
 def arise(request):
     rest = Restaurant.objects.filter(name__icontains="arise").first()
     return meal_list(request, rest.id)
 
 def atempo(request):
-    return meal_list(request, 2)
+    rest = Restaurant.objects.filter(name__icontains="atempo").first()
+    return meal_list(request, rest.id)
 
 def barbar(request):
-    return meal_list(request, 3)
+    rest = Restaurant.objects.filter(name__icontains="bar").first()
+    return meal_list(request, rest.id)
 
 def crave(request):
-    return meal_list(request, 19)
+    rest = Restaurant.objects.filter(name__icontains="crave").first()
+    return meal_list(request, rest.id)
 
 def hwangs(request):
     rest = Restaurant.objects.filter(name__icontains="hwang").first()
@@ -43,49 +48,64 @@ def yongtaufoo(request):
     return render(request, 'yongtaufoo.html')
 
 def cool_spot(request):
-    return meal_list(request, 10)
+    rest = Restaurant.objects.filter(name__icontains="cool").first()
+    return meal_list(request, rest.id)
 
 def spinelli(request):
-    return meal_list(request, 12)
+    rest = Restaurant.objects.filter(name__icontains="spinelli").first()
+    return meal_list(request, rest.id)
 
 def maxx_coffee(request):
-    return meal_list(request, 13)
+    rest = Restaurant.objects.filter(name__icontains="maxx").first()
+    return meal_list(request, rest.id)
 
 def liho(request):
-    return meal_list(request, 20)
+    rest = Restaurant.objects.filter(name__icontains="liho").first()
+    return meal_list(request, rest.id)
 
 def gongcha(request):
-    return meal_list(request, 11)
+    rest = Restaurant.objects.filter(name__icontains="gong cha").first()
+    return meal_list(request, rest.id)
 
 def fass_mala(request):
-    return meal_list(request, 9)
+    rest = Restaurant.objects.filter(name__icontains="liang ban").first()
+    return meal_list(request, rest.id)
 
 def teaparty(request):
-    return meal_list(request, 7)
+    rest = Restaurant.objects.filter(name__icontains="tea party").first()
+    return meal_list(request, rest.id)
 
 def subway(request):
-    return meal_list(request, 5)
+    rest = Restaurant.objects.filter(name__icontains="subway").first()
+    return meal_list(request, rest.id)
 
 def ichiban(request):
-    return meal_list(request, 6)
+    rest = Restaurant.objects.filter(name__icontains="taiwan ichiban").first()
+    return meal_list(request, rest.id)
 
 def pasta_express(request):
-    return meal_list(request, 8)
+    rest = Restaurant.objects.filter(name__icontains="pasta express").first()
+    return meal_list(request, rest.id)
 
 def deck_juice(request):
-    return meal_list(request, 15)
+    rest = Restaurant.objects.filter(name__icontains="juice").first()
+    return meal_list(request, rest.id)
 
 def liji(request):
-    return meal_list(request, 18)
+    rest = Restaurant.objects.filter(name__icontains="liji").first()
+    return meal_list(request, rest.id)
 
 def the_coffee_roaster(request):
-    return meal_list(request, 16)
+    rest = Restaurant.objects.filter(name__icontains="coffee roaster").first()
+    return meal_list(request, rest.id)
 
 def jewel_coffee(request):
-    return meal_list(request, 14)
+    rest = Restaurant.objects.filter(name__icontains="jewel").first()
+    return meal_list(request, rest.id)
 
 def starbucks(request):
-    return meal_list(request, 17)
+    rest = Restaurant.objects.filter(name__icontains="starbucks").first()
+    return meal_list(request, rest.id)
     
 def food2(request):
     return render(request, 'food2.html')
@@ -179,7 +199,7 @@ def help_me_dabao(request):
 def help_others_dabao(request):
     locations = Location.objects.all()
     destinations = Destination.objects.all()
-    orders = Order.objects.filter(is_ordered=True)
+    orders = Order.objects.filter(is_ordered=True, is_helped=False)
     return render(request, 'help-others-dabao.html', {'locations':locations, 'destinations':destinations, 'orders':orders})
 
 def help_others_dabao_result(request):
@@ -200,7 +220,7 @@ def login_test(request):
 
 @login_required()
 def login(request):
-    return render(request, 'login_old.html')
+    return render(request, 'login.html')
 
 def search_form(request):
     categories = Category.objects.all()
@@ -321,6 +341,10 @@ def meal_list(request, rest_id):
         'form_comment':form_comment,
         'comments':comments
         })
+
+def confirmation(request, order_id):
+    orders = Order.objects.filter(id=order_id)
+    return render(request, 'confirmation.html', {'orders':orders})
 
 def order_detail(request, order_id):
     order = Order.objects.filter(id=order_id).first()
