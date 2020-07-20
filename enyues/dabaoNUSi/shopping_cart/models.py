@@ -4,6 +4,7 @@ from django.db import models
 
 from accounts.models import Profile
 from theApp.models import Meal, Restaurant, Destination
+from datetime import datetime
 
 
 class OrderItem(models.Model):
@@ -37,6 +38,8 @@ class Order(models.Model):
     details = models.CharField(max_length=1000, default="No details provided")
     restaurant = models.ForeignKey(Restaurant, on_delete=models.CASCADE, default = 1)
     destination = models.CharField(max_length=100)
+    timeStart = models.DateTimeField(default=datetime.now, blank=True)
+    timeEnd = models.DateTimeField(default=datetime.now, blank=True)
 
     def get_cart_items(self):
         return self.items.all()
@@ -61,3 +64,6 @@ class Order(models.Model):
     
     def get_notes(self):
         return self.details
+
+    def get_hours(self):
+        return "{:d}:{:02d}".format(self.timeStart.hour, self.timeStart.minute) + " - " + "{:d}:{:02d}".format(self.timeEnd.hour, self.timeEnd.minute)

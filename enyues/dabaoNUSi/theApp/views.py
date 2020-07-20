@@ -7,6 +7,7 @@ from django.urls import reverse
 from .forms import CommentForm, RateForm
 #rom shopping_cart.models import Order
 from django.contrib.auth.decorators import login_required
+from datetime import datetime
 
 # Create your views here.
 def index(request):
@@ -199,7 +200,7 @@ def help_me_dabao(request):
 def help_others_dabao(request):
     locations = Location.objects.all()
     destinations = Destination.objects.all()
-    orders = Order.objects.filter(is_ordered=True, is_helped=False)
+    orders = Order.objects.filter(is_ordered=True, is_helped=False, timeEnd__gte=datetime.now())
     return render(request, 'help-others-dabao.html', {'locations':locations, 'destinations':destinations, 'orders':orders})
 
 def help_others_dabao_result(request):
@@ -436,3 +437,29 @@ def help_me_dabao_search(request):
     'queryset':qs}
 
     return render(request, "help_me_dabao_result.html", context)
+
+def food_search(request):
+    qs = Restaurant.objects.filter(food=True)
+    restaurant_name_query = request.POST.get('name')
+
+    if restaurant_name_query != '' and restaurant_name_query is not None:
+        qs = qs.filter(name__icontains=restaurant_name_query)
+
+    context = {
+        'queryset' : qs,
+    }
+
+    return render(request, "search_result.html", context)
+
+def drink_search(request):
+    qs = Restaurant.objects.filter(food=False)
+    restaurant_name_query = request.POST.get('name')
+
+    if restaurant_name_query != '' and restaurant_name_query is not None:
+        qs = qs.filter(name__icontains=restaurant_name_query)
+
+    context = {
+        'queryset' : qs,
+    }
+
+    return render(request, "search_result.html", context)

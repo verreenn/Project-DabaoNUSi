@@ -9,7 +9,7 @@ from theApp.models import Meal, Destination, Location
 
 from shopping_cart.extras import generate_order_id
 from shopping_cart.models import OrderItem, Order
-import datetime
+from datetime import datetime, timedelta
 
 
 def get_user_pending_order(request, rest_id):
@@ -91,10 +91,25 @@ def add_details(request, order_id):
     number_query = request.POST.get('number')
     details_query = request.POST.get('details')
     destination_query = request.POST.get('destination')
-    order = Order.objects.get(id = order_id, is_ordered=False)
+    validity_query = request.POST.get('validity')
+    order = Order.objects.get(id = order_id, is_ordered=False, timeEnd__gte=datetime.now())
     order.number = number_query
     order.details = details_query
     order.destination = destination_query
+    order.timeStart = datetime.now()
+    now = datetime.now()
+    if validity_query == "1":
+        now += timedelta(hours=1)
+        order.timeEnd = now
+    elif validity_query == "2":
+        now += timedelta(hours=2)
+        order.timeEnd = now
+    elif validity_query == "3":
+        now += timedelta(hours=3)
+        order.timeEnd = now
+    elif validity_query == "4":
+        now += timedelta(hours=4)
+        order.timeEnd = now
     order.is_ordered = True
     order.save()
     context = {

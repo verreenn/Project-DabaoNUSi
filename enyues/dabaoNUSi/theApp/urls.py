@@ -85,5 +85,7 @@ urlpatterns = [
     url(r'^confirmation/(?P<order_id>\d+)/$', views.confirmation, name='confirmation'),
     url(r'^restaurant/(?P<rest_id>\d+)/add_comment/$', views.add_comment, name='add_comment'),
     url(r'^restaurant/(?P<rest_id>\d+)/add_rating/$', views.add_rating, name='add_rating'),
-    path('help-me-dabao/search/search/', views.help_me_dabao_search, name='help_me_dabao_search')
+    path('help-me-dabao/search/search/', views.help_me_dabao_search, name='help_me_dabao_search'),
+    path('food_search/', views.food_search, name='food_search'),
+    path('drink_search/', views.drink_search, name='drink_search')
 ]
