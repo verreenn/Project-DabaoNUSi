@@ -20,7 +20,8 @@ def home(request):
     return render(request, 'index.html',{'restaurants' : restaurants})
 
 def arise(request):
-    return meal_list(request, 1)
+    rest = Restaurant.objects.filter(name__icontains="arise").first()
+    return meal_list(request, rest.id)
 
 def atempo(request):
     return meal_list(request, 2)
@@ -32,7 +33,8 @@ def crave(request):
     return meal_list(request, 19)
 
 def hwangs(request):
-    return meal_list(request, 4)
+    rest = Restaurant.objects.filter(name__icontains="hwang").first()
+    return meal_list(request, rest.id)
 
 def sinkee(request):
     return render(request, 'sinkee.html')
