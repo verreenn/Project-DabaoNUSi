@@ -121,6 +121,11 @@ body {
   color: transparent;
 }
 
+.rating-header {
+    margin-top: -10px;
+    margin-bottom: 10px;
+}
+
 #star1 {
     display: none;
 }

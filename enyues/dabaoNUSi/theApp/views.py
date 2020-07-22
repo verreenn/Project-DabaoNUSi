@@ -187,7 +187,7 @@ def drinks(request):
     return render(request, 'drinks.html', {'categories':categories,
     'locations':locations})
 
-#@login_required()
+@login_required()
 def help_me_dabao(request):
     locations = Location.objects.all()
     reviews = Reviews.objects.all()
@@ -196,7 +196,7 @@ def help_me_dabao(request):
     others = Other.objects.all()
     return render(request, 'help-me-dabao.html', {'locations':locations, 'reviews':reviews, 'prices':prices, 'dietarys':dietarys, 'others':others})
 
-#@login_required()
+@login_required()
 def help_others_dabao(request):
     locations = Location.objects.all()
     destinations = Destination.objects.all()

@@ -72,6 +72,13 @@ def order_details(request, rest_id):
     }
     return render(request, 'order_summary.html', context)
 
+def order_details_test(request, rest_id):
+    context = {
+        'order': 'Banana Cake',
+        'rest_id': rest_id
+    }
+    return render(request, 'order_summary.html', context)
+
 @login_required()
 def checkout(request, order_id, rest_id):
     order = Order.objects.get(id = order_id, is_ordered=False)
@@ -87,12 +94,12 @@ def checkout(request, order_id, rest_id):
 def add_details(request, order_id):
     destinations = Destination.objects.all()
     locations = Location.objects.all()
-    orders = Order.objects.filter(is_ordered=True)
+    orders = Order.objects.filter(is_ordered=True, timeEnd__gte=datetime.now())
     number_query = request.POST.get('number')
     details_query = request.POST.get('details')
     destination_query = request.POST.get('destination')
     validity_query = request.POST.get('validity')
-    order = Order.objects.get(id = order_id, is_ordered=False, timeEnd__gte=datetime.now())
+    order = Order.objects.get(id = order_id, is_ordered=False)
     order.number = number_query
     order.details = details_query
     order.destination = destination_query
