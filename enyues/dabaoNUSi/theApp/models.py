@@ -81,7 +81,7 @@ class Restaurant(models.Model):
         if count == 0:
             return 0
         else:
-            return sum([rate.rating for rate in ratings])/count
+            return round(sum([rate.rating for rate in ratings])/count, 2)
     
     average_price = get_avg_price
     average_rating = get_avg_rating

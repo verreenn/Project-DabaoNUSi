@@ -1,6 +1,6 @@
 from __future__ import unicode_literals
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Restaurant, Meal, Category, Location, Reviews, Price, Dietary, Other, Destination, Comment
+from .models import Restaurant, Meal, Category, Location, Reviews, Price, Dietary, Other, Destination, Comment, Rate
 from accounts.models import Profile
 from shopping_cart.models import Order
 from django.urls import reverse
@@ -119,7 +119,7 @@ def search_result(request):
     location_query = request.POST.get('location')
     category_query = request.POST.get('category')
     restaurant_name_query = request.POST.get('name')
-    #sort_query = request.GET.get('sort', 'id')
+    sort_query = request.GET.get('sort', 'id')
     sort_query = request.POST.get('sort')
     rating_query = request.POST.get('rating')
     prices_query = request.POST.get('prices')
@@ -168,6 +168,10 @@ def search_result(request):
             qs = sorted(qs, key=lambda a: a.get_avg_price(), reverse=True)
         elif sort_query == 'average_price_asc':
             qs = sorted(qs, key=lambda a: a.get_avg_price(), reverse=False)
+        elif sort_query == 'average_rating_desc':
+            qs = sorted(qs, key=lambda a: a.get_avg_rating(), reverse=True)
+        elif sort_query == 'average_rating_asc':
+            qs = sorted(qs, key=lambda a: a.get_avg_rating(), reverse=False)
 
     context = {
         'queryset' : qs,
@@ -370,6 +374,10 @@ def add_comment(request, rest_id):
 def add_rating(request, rest_id):
     restaurant = get_object_or_404(Restaurant, id=rest_id)
     user_profile = Profile.objects.get(id=request.user.id)
+    rate = Rate.objects.create(restaurant=restaurant, user=user_profile)
+    rating = request.POST['rating']
+    rate.rating = rating
+    rate.save()
     if request.method == "POST":
         form = RateForm(request.POST)
         if form.is_valid():
@@ -377,6 +385,7 @@ def add_rating(request, rest_id):
             rate.restaurant = restaurant
             rate.user = user_profile
             rate.save()
+    #return render(request, 'index.html',{'test':rating})
     return redirect('theApp:meal_list', rest_id=rest_id)
 
 def help_me_dabao_search(request):
