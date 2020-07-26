@@ -364,7 +364,7 @@ def order_detail(request, order_id):
 
 def add_comment(request, rest_id):
     restaurant = get_object_or_404(Restaurant, id=rest_id)
-    user_profile = Profile.objects.get(id=request.user.id)
+    user_profile = Profile.objects.get(user__username=request.user.username)
     if request.method == "POST":
         form = CommentForm(request.POST)
         if form.is_valid():
@@ -376,7 +376,7 @@ def add_comment(request, rest_id):
     
 def add_rating(request, rest_id):
     restaurant = get_object_or_404(Restaurant, id=rest_id)
-    user_profile = Profile.objects.get(id=request.user.id)
+    user_profile = Profile.objects.get(user__username=request.user.username)
     rate = Rate.objects.create(restaurant=restaurant, user=user_profile)
     rating = request.POST['rating']
     rate.rating = rating
