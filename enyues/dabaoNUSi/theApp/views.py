@@ -210,7 +210,7 @@ def help_others_dabao(request):
 def help_others_dabao_result(request):
     qs = Order.objects.all()
     location_query = request.POST.get('location')
-
+    orders = Order.objects.filter(is_ordered=True, is_helped=False, timeEnd__gte=datetime.now())
     if location_query != '' and location_query is not None and location_query != 'Choose...':
         qs = qs.filter(location__name__icontains=location_query)
 
@@ -349,6 +349,9 @@ def meal_list(request, rest_id):
 
 def confirmation(request, order_id):
     orders = Order.objects.filter(id=order_id)
+    order = orders.first()
+    order.is_helped = True
+    order.save()
     return render(request, 'confirmation.html', {'orders':orders})
 
 def order_detail(request, order_id):

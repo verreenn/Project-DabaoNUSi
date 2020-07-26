@@ -1,9 +1,62 @@
-{% block title%}Create an Account{% endblock %}
+{% load static %}
 
-{% block content %}
-    <form method="POST" class="form-group">
-        {% csrf_token %}
-        {{ form }}
-        <button type="submit" class="btn btn-success">Register</button>
-    </form>
-{% endblock %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <link rel="icon" href="{% static 'img/favicon.png' %}" type="image/png" />
+    <title>Login</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/flaticon.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/themify-icons.css' %}" />
+    <link rel="stylesheet" href="{% static 'vendors/owl-carousel/owl.carousel.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'vendors/nice-select/css/nice-select.css' %}" />
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <!-- main css -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+  </head>
+
+  <body>
+    {% block title %}
+    <div class="popular_courses">
+    <div class="row justify-content-center">
+    <div class="col-lg-6">
+        <div class="register_form">
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <h2 class="mb-3"></h2>
+                    <div class="main_title">
+                        <h2 class="mb-3">Create An Account</h2>
+                    </div>
+                </div>
+            </div>
+
+            {% endblock %}
+
+            {% block content %}
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-8">
+                        <form method="POST" class="form-group justify-content-center">
+                            {% csrf_token %}
+                            {{form}}
+                            <p></p>
+                            <button type="submit" class="btn btn-success">Register</button>
+                            <p></p>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            {% endblock %}
+        </div>
+    </div>
+    </div>
+    </div>
+    </body>
+</html>
