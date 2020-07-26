@@ -226,6 +226,15 @@
                           <button type="button" class="close" data-dismiss="modal">&times;</button>                
                       </div>
                       <div class="modal-body">
+                        <p>Meals and Drinks</p>
+                        {% for meal in ord.get_cart_items %}
+                        <ul>
+                            <li> {{meal.meal.name}}, Price : {{meal.meal.price}} </li>
+                        </ul>
+                        {% endfor %}
+                        <p>Total : {{ord.get_cart_total}} </p>
+                      </div>
+                      <div class="modal-body">
                           <p>Are you sure you want to help?</p>
                           <p class="text-secondary"><small>Upon proceeding, this request will be removed from the system. </small></p>
                       </div>
@@ -239,7 +248,7 @@
             {% endfor %}
           </div>
         </div>
-
+        <!---
         <div class="row" data-aos="fade">
           <div class="col-md-12">
  
@@ -598,6 +607,7 @@
                       </span>
                   </a>
               </li>
+              -->
           </ul>
         </nav>
       </div>

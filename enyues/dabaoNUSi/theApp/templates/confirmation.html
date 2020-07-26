@@ -52,6 +52,13 @@
                           <h5 class="mb-3">Note : </h5>
                           <h5 class="mb-3"> {{ord.details}} </h5>
                           <p></p>
+                          <p>Meals and Drinks</p>
+                            {% for meal in ord.get_cart_items %}
+                                <ul>
+                                    <li> {{meal.meal.name}}, Price : {{meal.meal.price}} </li>
+                                </ul>
+                            {% endfor %}
+                          <p>Total : {{ord.get_cart_total}} </p>
                         </div>
                     </div>
                 </div>

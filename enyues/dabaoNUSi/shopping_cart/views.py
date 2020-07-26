@@ -14,7 +14,7 @@ from datetime import datetime, timedelta
 
 def get_user_pending_order(request, rest_id):
     # get order for the correct user
-    user_profile = Profile.objects.get(id=request.user.id)
+    user_profile = Profile.objects.get(user__username=request.user.username)
     order = Order.objects.filter(owner=user_profile, is_ordered=False, restaurant_id=rest_id)
     if order.exists():
         # get the only order in the list of filtered orders
@@ -25,7 +25,7 @@ def get_user_pending_order(request, rest_id):
 @login_required()
 def add_to_cart(request, item_id):
     # get the user profile
-    user_profile = Profile.objects.get(id=request.user.id)
+    user_profile = Profile.objects.get(user__username=request.user.username)
     # filter products by id
     product = Meal.objects.filter(id=item_id).first()
     rest_id = product.restaurant.id
